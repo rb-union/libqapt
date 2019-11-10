@@ -1,0 +1,45 @@
+From 9cae989f1ee9d862b3e5355ee902d808f4c8b196 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=E7=9F=B3=E5=8D=9A=E6=96=87?= <sbw@sbw.so>
+Date: Tue, 8 Aug 2017 17:07:34 +0800
+Subject: [PATCH] fix old error not clear
+
+---
+ src/debfile.cpp | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/debfile.cpp b/src/debfile.cpp
+index bf29b32..94062d9 100644
+--- a/src/debfile.cpp
++++ b/src/debfile.cpp
+@@ -29,6 +29,7 @@
+ #include <apt-pkg/fileutl.h>
+ #include <apt-pkg/md5.h>
+ #include <apt-pkg/tagfile.h>
++#include <apt-pkg/error.h>
+ 
+ #include <QDebug>
+ 
+@@ -67,6 +68,9 @@ void DebFilePrivate::init()
+     try {
+         extractor = new debDebFile::MemControlExtract("control");
+         if(!extractor->Read(deb)) {
++            // clear pending errors.
++            _error->Discard();
++
+             return; // not valid.
+         } else {
+             isValid = true;
+@@ -75,6 +79,10 @@ void DebFilePrivate::init()
+         // MemControlExtract likes to throw out of range exceptions when it
+         // encounters an invalid file. Catch those to prevent the application
+         // from exploding.
++
++        // clear pending errors.
++        _error->Discard();
++
+         return;
+     }
+ 
+-- 
+2.11.0
+

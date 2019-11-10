@@ -69,7 +69,7 @@ Description: Development headers for the QApt library
 
 Package: libqapt3-runtime
 Architecture: any
-Depends: polkit-kde-agent-1 | policykit-1-gnome,
+Depends: dde-polkit-agent | polkit-kde-agent-1 | policykit-1-gnome,
          ${misc:Depends},
          ${shlibs:Depends}
 Description: Runtime components for the QApt library
