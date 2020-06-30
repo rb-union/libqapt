@@ -1,3 +1,4 @@
 0001-add-zh_CN-translate.patch
 0001-fix-old-error-not-clear.patch
 0001-fix-long-description-error.patch
+deepin_writeFileToDisk_whitelist.patch
