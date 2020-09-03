@@ -2,3 +2,4 @@
 0001-fix-old-error-not-clear.patch
 0001-fix-long-description-error.patch
 deepin_writeFileToDisk_whitelist.patch
+deepin_writeFileToDisk_whitelist_2.patch
