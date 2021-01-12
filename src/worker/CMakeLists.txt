@@ -60,6 +60,16 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.service
 
 if(KF5Auth_FOUND)
     kauth_install_actions(${QAPT_WORKER_RDN_VERSIONED} ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.actions)
+    # Add translations from other countries and regions to the policy file
+    # This method is found by consulting build.make
+    # but there are only Chinese and English in build.make and no other languages
+    execute_process(COMMAND /usr/lib/kauth/libexec/kauth-policy-gen
+        ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.actions
+        ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.policy
+    )
+
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.policy
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/polkit-1/actions)
 else()
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.policy
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/polkit-1/actions)
