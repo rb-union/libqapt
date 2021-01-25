@@ -130,6 +130,7 @@ Persistence=session
 
 [@QAPT_WORKER_RDN_VERSIONED@.commitchanges]
 Name=Authentication is required to install or remove packages
+Name[bo]=མཉེན་ཆས་ཁུག་མ་སྒྲིག་འཇུག་བྱེད་པའམ་སྤོས་ཚེ་ངོས་འཛིན་བྱེད་དགོས།
 Name[bs]=Instalacija i pregled softverskih paketa
 Name[ca]=Instal·la i suprimeix paquets de programari
 Name[ca@valencia]=Instal·la i suprimeix paquets de programari
@@ -172,6 +173,7 @@ Name[zh_CN]=安装或移除软件包需要认证
 Name[zh_TW]=安裝或移除套件需要認證
 Name[zh_HK]=安裝或移除軟件包需要認證
 Description=To install or remove software you need to authenticate.
+Description[bo]=མཉེན་ཆས་སྒྲིག་འཇུག་བྱེད་པའམ་སྤོ་བར་ཁྱོད་ཀྱིས་ངོས་འཛིན་བྱེད་དགོས།
 Description[bs]=Za instalaciju ili uklanjanje softvera treba se autentificirati
 Description[ca]=Heu d'autenticar-vos per instal·lar o suprimir programari.
 Description[ca@valencia]=Heu d'autenticar-vos per instal·lar o suprimir programari.
