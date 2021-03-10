@@ -1,3 +1,10 @@
+libqapt (3.0.4.4-1+deepin2) unstable; urgency=medium
+
+  * add Translations
+  * 
+
+ -- cuizhen <cuizhen@uniontech.com>  Wed, 10 March 2021 09:41:45 +0800
+
 libqapt (3.0.4.3-1+deepin2) unstable; urgency=medium
 
   * Non-maintainer upload.
