@@ -62,6 +62,7 @@ libQApt.so.3 libqapt3 #MINVER#
  _ZN4QApt11Transaction14updatePackagesERK4QMapI7QString8QVariantE@Base 3.0.0
  _ZN4QApt11Transaction14updateProgressEi@Base 3.0.0
  _ZN4QApt11Transaction14updatePropertyEiRK12QDBusVariant@Base 3.0.0
+ _ZN4QApt11Transaction14setEnvVariableERK4QMapI7QString8QVariantE@Base 3.0.0~
  _ZN4QApt11Transaction15progressChangedEi@Base 3.0.0
  _ZN4QApt11Transaction15promptUntrustedE11QStringList@Base 3.0.0
  _ZN4QApt11Transaction15setFrontendCapsENS_12FrontendCapsE@Base 3.0.0
@@ -71,6 +72,7 @@ libQApt.so.3 libqapt3 #MINVER#
  _ZN4QApt11Transaction17updateCancellableEb@Base 3.0.0
  _ZN4QApt11Transaction17updateDebconfPipeERK7QString@Base 3.0.0
  _ZN4QApt11Transaction17updateDownloadETAEy@Base 3.0.0
+ _ZN4QApt11Transaction17updateEnvVariableERK4QMapI7QString8QVariantE@Base 3.0.0
  _ZN4QApt11Transaction18cancellableChangedEb@Base 3.0.0
  _ZN4QApt11Transaction18configFileConflictE7QStringS1_@Base 3.0.0
  _ZN4QApt11Transaction18downloadETAChangedEy@Base 3.0.0
@@ -263,6 +265,7 @@ libQApt.so.3 libqapt3 #MINVER#
  _ZNK4QApt11Transaction11downloadETAEv@Base 3.0.0
  _ZNK4QApt11Transaction11errorStringEv@Base 3.0.0
  _ZNK4QApt11Transaction11isCancelledEv@Base 3.0.0
+ _ZNK4QApt11Transaction11envVariableEv@Base 3.0.0
  _ZNK4QApt11Transaction12errorDetailsEv@Base 3.0.0
  _ZNK4QApt11Transaction12frontendCapsEv@Base 3.0.0
  _ZNK4QApt11Transaction13downloadSpeedEv@Base 3.0.0
@@ -281,6 +284,7 @@ libQApt.so.3 libqapt3 #MINVER#
  _ZNK4QApt11Transaction8isPausedEv@Base 3.0.0
  _ZNK4QApt11Transaction8packagesEv@Base 3.0.0
  _ZNK4QApt11Transaction8progressEv@Base 3.0.0
+ 
  _ZNK4QApt11TransactioneqEPKS0_@Base 3.0.0
  _ZNK4QApt14ChangelogEntry11descriptionEv@Base 3.0.0
  _ZNK4QApt14ChangelogEntry13issueDateTimeEv@Base 3.0.0
