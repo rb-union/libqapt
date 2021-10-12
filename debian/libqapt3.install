@@ -1,2 +1,3 @@
 usr/lib/*/libQApt.so.3
 usr/lib/*/libQApt.so.3.*
+debian/libqapt3.conf /etc/libqapt3/
