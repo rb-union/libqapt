@@ -4,10 +4,10 @@ Author: qinxialei <qinxialei@uniontecj.com>
 Forwarded: not-needed
 Last-Update: 2021-10-12
 
-Index: libqapt-3.0.4.6/src/worker/transaction.cpp
+Index: libqapt/src/worker/transaction.cpp
 ===================================================================
---- libqapt-3.0.4.6.orig/src/worker/transaction.cpp
-+++ libqapt-3.0.4.6/src/worker/transaction.cpp
+--- libqapt.orig/src/worker/transaction.cpp
++++ libqapt/src/worker/transaction.cpp
 @@ -31,6 +31,7 @@
  #include "transactionadaptor.h"
  #include "transactionqueue.h"
@@ -94,10 +94,10 @@ Index: libqapt-3.0.4.6/src/worker/transaction.cpp
  }
  
  void Transaction::setProperty(int property, QDBusVariant value)
-Index: libqapt-3.0.4.6/src/worker/transaction.h
+Index: libqapt/src/worker/transaction.h
 ===================================================================
---- libqapt-3.0.4.6.orig/src/worker/transaction.h
-+++ libqapt-3.0.4.6/src/worker/transaction.h
+--- libqapt.orig/src/worker/transaction.h
++++ libqapt/src/worker/transaction.h
 @@ -33,6 +33,7 @@
  
  class QTimer;
@@ -123,10 +123,10 @@ Index: libqapt-3.0.4.6/src/worker/transaction.h
  
      QVariantMap m_envVariable;
  
-Index: libqapt-3.0.4.6/src/worker/workerdaemon.cpp
+Index: libqapt/src/worker/workerdaemon.cpp
 ===================================================================
---- libqapt-3.0.4.6.orig/src/worker/workerdaemon.cpp
-+++ libqapt-3.0.4.6/src/worker/workerdaemon.cpp
+--- libqapt.orig/src/worker/workerdaemon.cpp
++++ libqapt/src/worker/workerdaemon.cpp
 @@ -23,6 +23,7 @@
  // Qt includes
  #include <QtCore/QThread>
@@ -155,7 +155,7 @@ Index: libqapt-3.0.4.6/src/worker/workerdaemon.cpp
      m_workerThread = new QThread(this);
      m_worker->moveToThread(m_workerThread);
      m_workerThread->start();
-@@ -96,12 +101,67 @@ int WorkerDaemon::dbusSenderUid() const
+@@ -96,12 +101,68 @@ int WorkerDaemon::dbusSenderUid() const
      return connection().interface()->serviceUid(message().service()).value();
  }
  
@@ -199,6 +199,7 @@ Index: libqapt-3.0.4.6/src/worker/workerdaemon.cpp
 +        //if tmp_PID != m_Deepin_deb_installer_PID , means the deepin_deb_installer is reopen and need
 +        //to get the user authentication.
 +        m_Deepin_deb_installer_PID = tmp_PID.toInt();
++        m_TransTimer = 0;
 +        return true;
 +    }
 +    else
@@ -224,10 +225,10 @@ Index: libqapt-3.0.4.6/src/worker/workerdaemon.cpp
      trans->setService(message().service());
  
      return trans;
-Index: libqapt-3.0.4.6/src/worker/workerdaemon.h
+Index: libqapt/src/worker/workerdaemon.h
 ===================================================================
---- libqapt-3.0.4.6.orig/src/worker/workerdaemon.h
-+++ libqapt-3.0.4.6/src/worker/workerdaemon.h
+--- libqapt.orig/src/worker/workerdaemon.h
++++ libqapt/src/worker/workerdaemon.h
 @@ -41,11 +41,19 @@ class WorkerDaemon : public QCoreApplica
  public:
      WorkerDaemon(int &argc, char **argv);
