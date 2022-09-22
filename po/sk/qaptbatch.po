@@ -1,0 +1,438 @@
+# translation of qaptbatch.po to Slovak
+# Richard Fric <Richard.Fric@kdemail.net>, 2010.
+# Milan Basa <minkob@mail.t-com.sk>, 2011.
+# Roman Paholík <wizzardsk@gmail.com>, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: qaptbatch\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 02:52+0200\n"
+"PO-Revision-Date: 2014-12-12 15:59+0100\n"
+"Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: utils/qapt-batch/detailswidget.cpp:51
+#, kde-format
+msgctxt "@label Remaining time"
+msgid "Remaining Time:"
+msgstr "Zostávajúci čas:"
+
+#: utils/qapt-batch/detailswidget.cpp:56
+#, kde-format
+msgctxt "@label Download Rate"
+msgid "Speed:"
+msgstr "Rýchlosť:"
+
+#: utils/qapt-batch/detailswidget.cpp:107
+#, kde-format
+msgctxt "@info:progress Remaining time"
+msgid "Unknown"
+msgstr "Neznáme"
+
+#: utils/qapt-batch/detailswidget.cpp:116
+#, kde-format
+msgctxt "@info:progress Download rate"
+msgid "%1/s"
+msgstr "%1/s"
+
+#: utils/qapt-batch/main.cpp:33
+#, kde-format
+msgctxt "@info"
+msgid "A batch installer using QApt"
+msgstr "Dávkový inštalátor používajúci QApt"
+
+#: utils/qapt-batch/main.cpp:45
+#, kde-format
+msgctxt "@title"
+msgid "QApt Batch Installer"
+msgstr "QApt dávkový inštalátor"
+
+#: utils/qapt-batch/main.cpp:49
+#, kde-format
+msgctxt "@info:credit"
+msgid "(C) 2010 Jonathan Thomas"
+msgstr "(C) 2010 Jonathan Thomas"
+
+#: utils/qapt-batch/main.cpp:51
+#, kde-format
+msgctxt "@info:credit"
+msgid "Jonathan Thomas"
+msgstr "Jonathan Thomas"
+
+#: utils/qapt-batch/main.cpp:54
+#, kde-format
+msgctxt "@info:credit"
+msgid "Harald Sitter"
+msgstr "Harald Sitter"
+
+#: utils/qapt-batch/main.cpp:55
+#, kde-format
+msgctxt "@info:credit"
+msgid "Qt 5 port"
+msgstr "Qt 5 port"
+
+#: utils/qapt-batch/main.cpp:63
+#, kde-format
+msgctxt "@info:shell"
+msgid "Attaches the window to an X app specified by winid"
+msgstr "Priradí okno X-aplikácii špecifikovanej winid-om"
+
+#: utils/qapt-batch/main.cpp:64
+#, kde-format
+msgctxt "@info:shell value name"
+msgid "winid"
+msgstr "winid"
+
+#: utils/qapt-batch/main.cpp:68
+#, kde-format
+msgctxt "@info:shell"
+msgid "Install a package"
+msgstr "Inštalovať balíček"
+
+#: utils/qapt-batch/main.cpp:71
+#, kde-format
+msgctxt "@info:shell"
+msgid "Remove a package"
+msgstr "Odstrániť balíček"
+
+#: utils/qapt-batch/main.cpp:74
+#, kde-format
+msgctxt "@info:shell"
+msgid "Update the package cache"
+msgstr "Obnov balíčkovaciu cache"
+
+#: utils/qapt-batch/main.cpp:77
+#, kde-format
+msgctxt "@info:shell"
+msgid "Packages to be operated upon"
+msgstr "Balíčky s ktorými sa bude pracovať"
+
+#: utils/qapt-batch/main.cpp:87
+#, kde-format
+msgctxt "@info:shell error"
+msgid "Only one operation mode may be defined."
+msgstr "Definovaný môže byť iba jeden režim operácie."
+
+#: utils/qapt-batch/main.cpp:98
+#, kde-format
+msgctxt "@info:shell error"
+msgid "No operation mode defined."
+msgstr "Nie je definovaný režim operácie."
+
+#: utils/qapt-batch/qaptbatch.cpp:65
+#, kde-format
+msgctxt "@label"
+msgid "Waiting for authorization"
+msgstr "Čakanie na autorizáciu"
+
+#: utils/qapt-batch/qaptbatch.cpp:100 utils/qapt-batch/qaptbatch.cpp:186
+#, kde-format
+msgctxt "@label"
+msgid ""
+"The package system could not be initialized, your configuration may be "
+"broken."
+msgstr ""
+"Balíčkovací systém nemôže byť inicializovaný, možno máte problém s "
+"konfiguráciou."
+
+#: utils/qapt-batch/qaptbatch.cpp:102 utils/qapt-batch/qaptbatch.cpp:188
+#, kde-format
+msgctxt "@title:window"
+msgid "Initialization error"
+msgstr "Inicializačná chyba"
+
+#: utils/qapt-batch/qaptbatch.cpp:127 utils/qapt-batch/qaptbatch.cpp:254
+#, kde-format
+msgctxt "@label"
+msgid ""
+"The package \"%1\" has not been found among your software sources. "
+"Therefore, it cannot be installed. "
+msgstr ""
+"Balíček \"%1\" nebol nájdený v zdrojoch softwaru, preto nemôže byť "
+"nainštalovaný."
+
+#: utils/qapt-batch/qaptbatch.cpp:130 utils/qapt-batch/qaptbatch.cpp:257
+#, kde-format
+msgctxt "@title:window"
+msgid "Package Not Found"
+msgstr "Balíček nebol nájdený"
+
+#: utils/qapt-batch/qaptbatch.cpp:195
+#, kde-format
+msgctxt "@label"
+msgid ""
+"Another application seems to be using the package system at this time. You "
+"must close all other package managers before you will be able to install or "
+"remove any packages."
+msgstr ""
+"Iná aplikácia používa balíčkovací systém. Musíte zavrieť všetky ostatné "
+"balíčkovacie menežéry aby  ste mohli inštalovať alebo odstraňovať balíčky."
+
+#: utils/qapt-batch/qaptbatch.cpp:199
+#, kde-format
+msgctxt "@title:window"
+msgid "Unable to obtain package system lock"
+msgstr "Nie je možné odomknúť balíčkovací systém"
+
+#: utils/qapt-batch/qaptbatch.cpp:204
+#, kde-format
+msgctxt "@label"
+msgid ""
+"You do not have enough disk space in the directory at %1 to continue with "
+"this operation."
+msgstr ""
+"Nemáte dosť diskového priestoru v adresáre na %1 aby sa dalo pokračovať v "
+"operácii."
+
+#: utils/qapt-batch/qaptbatch.cpp:206
+#, kde-format
+msgctxt "@title:window"
+msgid "Low disk space"
+msgstr "Málo diskového priestoru"
+
+#: utils/qapt-batch/qaptbatch.cpp:211
+#, kde-format
+msgctxt "@label"
+msgid "Could not download packages"
+msgstr "Nie je možné stiahnuť balíčky"
+
+#: utils/qapt-batch/qaptbatch.cpp:212
+#, kde-format
+msgctxt "@title:window"
+msgid "Download failed"
+msgstr "Sťahovanie zlyhalo"
+
+#: utils/qapt-batch/qaptbatch.cpp:216
+#, kde-format
+msgctxt "@label"
+msgid "An error occurred while applying changes:"
+msgstr "Vyskytla sa chyba počas aplikovania zmien:"
+
+#: utils/qapt-batch/qaptbatch.cpp:217
+#, kde-format
+msgctxt "@title:window"
+msgid "Commit error"
+msgstr "Potvrdiť chybu"
+
+#: utils/qapt-batch/qaptbatch.cpp:222
+#, kde-format
+msgctxt "@label"
+msgid ""
+"This operation cannot continue since proper authorization was not provided"
+msgstr ""
+"V operácii nie je možné pokračovať pretože nebola prevedená autorizácia"
+
+#: utils/qapt-batch/qaptbatch.cpp:224
+#, kde-format
+msgctxt "@title:window"
+msgid "Authentication error"
+msgstr "Chyba autentifikácie"
+
+#: utils/qapt-batch/qaptbatch.cpp:228
+#, kde-format
+msgctxt "@label"
+msgid ""
+"It appears that the QApt worker has either crashed or disappeared. Please "
+"report a bug to the QApt maintainers"
+msgstr "Zdá sa že QApt spadol. Prosím pošlite bugreport QApt správcom."
+
+#: utils/qapt-batch/qaptbatch.cpp:230
+#, kde-format
+msgctxt "@title:window"
+msgid "Unexpected Error"
+msgstr "Neočakávaná chyba"
+
+#: utils/qapt-batch/qaptbatch.cpp:238
+#, kde-format
+msgctxt "@label"
+msgid ""
+"The following package has not been verified by its author. Downloading "
+"untrusted packages has been disallowed by your current configuration."
+msgid_plural ""
+"The following packages have not been verified by their authors. Downloading "
+"untrusted packages has been disallowed by your current configuration."
+msgstr[0] ""
+"Nasledujúci balíček nebol overený autorom. Sťahovanie neoverených balíčkov "
+"nie je povolené vašou aktuálnou konfiguráciou."
+msgstr[1] ""
+"Nasledujúce balíčky neboli overené autorom. Sťahovanie neoverených balíčkov "
+"nie je povolené vašou aktuálnou konfiguráciou."
+msgstr[2] ""
+"Nasledujúce balíčky neboli overené autorom. Sťahovanie neoverených balíčkov "
+"nie je povolené vašou aktuálnou konfiguráciou."
+
+#: utils/qapt-batch/qaptbatch.cpp:247
+#, kde-format
+msgctxt "@title:window"
+msgid "Untrusted Packages"
+msgstr "Neoverené balíčky"
+
+#: utils/qapt-batch/qaptbatch.cpp:270
+#, kde-format
+msgctxt "@title:window"
+msgid "Media Change Required"
+msgstr "Vyžaduje sa zmena média"
+
+#: utils/qapt-batch/qaptbatch.cpp:271
+#, kde-kuit-format
+msgctxt "@label"
+msgid "Please insert %1 into <filename>%2</filename>"
+msgstr "Prosím vložte %1 do <filename>%2</filename>"
+
+#: utils/qapt-batch/qaptbatch.cpp:279
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning - Unverified Software"
+msgstr "Upozornenie - Neoverený software"
+
+#: utils/qapt-batch/qaptbatch.cpp:281
+#, kde-kuit-format
+msgctxt "@label"
+msgid ""
+"The following piece of software cannot be verified. <warning>Installing "
+"unverified software represents a security risk, as the presence of "
+"unverifiable software can be a sign of tampering.</warning> Do you wish to "
+"continue?"
+msgid_plural ""
+"The following pieces of software cannot be authenticated. "
+"<warning>Installing unverified software represents a security risk, as the "
+"presence of unverifiable software can be a sign of tampering.</warning> Do "
+"you wish to continue?"
+msgstr[0] ""
+"Nasledujúci software nemôže byť overený. <warning>Inštalovanie neovereného "
+"softwaru znamená bezpečnostné riziko. </warning>Chcete pokračovať?"
+msgstr[1] ""
+"Nasledujúci software nemôže byť overený. <warning>Inštalovanie neovereného "
+"softwaru znamená bezpečnostné riziko. </warning>Chcete pokračovať?"
+msgstr[2] ""
+"Nasledujúci software nemôže byť overený. <warning>Inštalovanie neovereného "
+"softwaru znamená bezpečnostné riziko. </warning>Chcete pokračovať?"
+
+#: utils/qapt-batch/qaptbatch.cpp:316
+#, kde-format
+msgctxt "@label Progress bar label when waiting to start"
+msgid "Waiting to start."
+msgstr "Čakanie na štart."
+
+#: utils/qapt-batch/qaptbatch.cpp:321
+#, kde-format
+msgctxt "@label Status label when waiting for a password"
+msgid "Waiting for authentication."
+msgstr "Čaká sa na overenie."
+
+#: utils/qapt-batch/qaptbatch.cpp:325
+#, kde-format
+msgctxt "@label Status label when waiting for a CD-ROM"
+msgid "Waiting for required media."
+msgstr "Čakanie na potrebné médium."
+
+#: utils/qapt-batch/qaptbatch.cpp:330
+#, kde-format
+msgctxt "@label Status label"
+msgid "Waiting for other package managers to quit."
+msgstr "Čakanie na ukončenie iných správcov balíkov."
+
+#: utils/qapt-batch/qaptbatch.cpp:338
+#, kde-format
+msgctxt "@label Status label"
+msgid "Loading package cache."
+msgstr "Načítavanie pamäte balíčkov."
+
+#: utils/qapt-batch/qaptbatch.cpp:342
+#, kde-format
+msgctxt "@title:window"
+msgid "Refreshing Package Information"
+msgstr "Obnova informácií o balíčkoch"
+
+#: utils/qapt-batch/qaptbatch.cpp:343
+#, kde-format
+msgctxt "@info:status"
+msgid "Checking for new, removed or upgradeable packages"
+msgstr "kontrolujú sa nové, odstránené alebo upgradovateľné balíčky"
+
+#: utils/qapt-batch/qaptbatch.cpp:345
+#, kde-format
+msgctxt "@title:window"
+msgid "Downloading"
+msgstr "Sťahovanie"
+
+#: utils/qapt-batch/qaptbatch.cpp:347
+#, kde-format
+msgctxt "@info:status"
+msgid "Downloading package file"
+msgid_plural "Downloading package files"
+msgstr[0] "Sťahovanie súboru balíčka"
+msgstr[1] "Sťahovanie súborov balíčkov"
+msgstr[2] "Sťahovanie súborov balíčkov"
+
+#: utils/qapt-batch/qaptbatch.cpp:355
+#, kde-format
+msgctxt "@title:window"
+msgid "Installing Packages"
+msgstr "Inštalovanie balíčkov"
+
+#: utils/qapt-batch/qaptbatch.cpp:360
+#, kde-format
+msgctxt "@title:window"
+msgid "Installation Complete"
+msgstr "Inštalácia kompletná"
+
+#: utils/qapt-batch/qaptbatch.cpp:364
+#, kde-format
+msgctxt "@label"
+msgid "Package installation failed."
+msgstr "Inštalácia balíčka zlyhala."
+
+#: utils/qapt-batch/qaptbatch.cpp:367
+#, kde-format
+msgctxt "@label"
+msgid "Package successfully installed."
+msgid_plural "Packages successfully installed."
+msgstr[0] "Balíček úspešne nainštalovaný."
+msgstr[1] "Balíčky úspešne nainštalované."
+msgstr[2] "Balíčky úspešne nainštalované."
+
+#: utils/qapt-batch/qaptbatch.cpp:371
+#, kde-format
+msgctxt "@title:window"
+msgid "Removal Complete"
+msgstr "Odstraňovanie ukončené"
+
+#: utils/qapt-batch/qaptbatch.cpp:375
+#, kde-format
+msgctxt "@label"
+msgid "Package removal failed."
+msgstr "Odstraňovanie balíčka zlyhalo."
+
+#: utils/qapt-batch/qaptbatch.cpp:379
+#, kde-format
+msgctxt "@label"
+msgid "Package successfully uninstalled."
+msgid_plural "Packages successfully uninstalled."
+msgstr[0] "Balíček úspešne odstránený."
+msgstr[1] "Balíčky úspešne odstránené."
+msgstr[2] "Balíčky úspešne odstránené."
+
+#: utils/qapt-batch/qaptbatch.cpp:383
+#, kde-format
+msgctxt "@title:window"
+msgid "Refresh Complete"
+msgstr "Obnova ukončená"
+
+#: utils/qapt-batch/qaptbatch.cpp:386
+#, kde-format
+msgctxt "@info:status"
+msgid "Refresh failed."
+msgstr "Obnova zlyhala."
+
+#: utils/qapt-batch/qaptbatch.cpp:388
+#, kde-format
+msgctxt "@label"
+msgid "Package information successfully refreshed."
+msgstr "Informácie o balíčkoch obnovené úspešne."

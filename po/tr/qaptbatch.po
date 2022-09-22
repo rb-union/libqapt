@@ -1,0 +1,430 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Volkan Gezer <volkangezer@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-sysadmin-kde4\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 02:52+0200\n"
+"PO-Revision-Date: 2014-12-24 23:01+0000\n"
+"Last-Translator: Necdet <necdetyucel@gmail.com>\n"
+"Language-Team: Turkish (http://www.transifex.com/projects/p/extragear-"
+"sysadmin-k-tr/language/tr/)\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: utils/qapt-batch/detailswidget.cpp:51
+#, kde-format
+msgctxt "@label Remaining time"
+msgid "Remaining Time:"
+msgstr "Kalan Süre:"
+
+#: utils/qapt-batch/detailswidget.cpp:56
+#, kde-format
+msgctxt "@label Download Rate"
+msgid "Speed:"
+msgstr "Hız:"
+
+#: utils/qapt-batch/detailswidget.cpp:107
+#, kde-format
+msgctxt "@info:progress Remaining time"
+msgid "Unknown"
+msgstr "Bilinmeyen"
+
+#: utils/qapt-batch/detailswidget.cpp:116
+#, kde-format
+msgctxt "@info:progress Download rate"
+msgid "%1/s"
+msgstr "%1/s"
+
+#: utils/qapt-batch/main.cpp:33
+#, kde-format
+msgctxt "@info"
+msgid "A batch installer using QApt"
+msgstr "QApt kullanan toplu bir yükleyici"
+
+#: utils/qapt-batch/main.cpp:45
+#, kde-format
+msgctxt "@title"
+msgid "QApt Batch Installer"
+msgstr "QApt Toplu Yükleyicisi"
+
+#: utils/qapt-batch/main.cpp:49
+#, kde-format
+msgctxt "@info:credit"
+msgid "(C) 2010 Jonathan Thomas"
+msgstr "(C) 2010 Jonathan Thomas"
+
+#: utils/qapt-batch/main.cpp:51
+#, kde-format
+msgctxt "@info:credit"
+msgid "Jonathan Thomas"
+msgstr "Jonathan Thomas"
+
+#: utils/qapt-batch/main.cpp:54
+#, kde-format
+msgctxt "@info:credit"
+msgid "Harald Sitter"
+msgstr "Harald Sitter"
+
+#: utils/qapt-batch/main.cpp:55
+#, kde-format
+msgctxt "@info:credit"
+msgid "Qt 5 port"
+msgstr "Qt 5 portu"
+
+#: utils/qapt-batch/main.cpp:63
+#, kde-format
+msgctxt "@info:shell"
+msgid "Attaches the window to an X app specified by winid"
+msgstr "Bir X uygulamasına winid ile belirlenen bir pencere iliştirir"
+
+#: utils/qapt-batch/main.cpp:64
+#, kde-format
+msgctxt "@info:shell value name"
+msgid "winid"
+msgstr "winid"
+
+#: utils/qapt-batch/main.cpp:68
+#, kde-format
+msgctxt "@info:shell"
+msgid "Install a package"
+msgstr "Bir Paket Kur"
+
+#: utils/qapt-batch/main.cpp:71
+#, kde-format
+msgctxt "@info:shell"
+msgid "Remove a package"
+msgstr "Bir Paket Kaldır"
+
+#: utils/qapt-batch/main.cpp:74
+#, kde-format
+msgctxt "@info:shell"
+msgid "Update the package cache"
+msgstr "Paket belleğini güncelle"
+
+#: utils/qapt-batch/main.cpp:77
+#, kde-format
+msgctxt "@info:shell"
+msgid "Packages to be operated upon"
+msgstr "Açılışta işleme alınacak paketler"
+
+#: utils/qapt-batch/main.cpp:87
+#, kde-format
+msgctxt "@info:shell error"
+msgid "Only one operation mode may be defined."
+msgstr "Sadece bir işlem kipi tanımlanabilir."
+
+#: utils/qapt-batch/main.cpp:98
+#, kde-format
+msgctxt "@info:shell error"
+msgid "No operation mode defined."
+msgstr "Hiç işlem kipi tanımlanmadı."
+
+#: utils/qapt-batch/qaptbatch.cpp:65
+#, kde-format
+msgctxt "@label"
+msgid "Waiting for authorization"
+msgstr "Doğrulama için bekleniyor"
+
+#: utils/qapt-batch/qaptbatch.cpp:100 utils/qapt-batch/qaptbatch.cpp:186
+#, kde-format
+msgctxt "@label"
+msgid ""
+"The package system could not be initialized, your configuration may be "
+"broken."
+msgstr "Paket sistemi başlatılamadı, yapılandırmanız bozuk olabilir."
+
+#: utils/qapt-batch/qaptbatch.cpp:102 utils/qapt-batch/qaptbatch.cpp:188
+#, kde-format
+msgctxt "@title:window"
+msgid "Initialization error"
+msgstr "Başlatma hatası"
+
+#: utils/qapt-batch/qaptbatch.cpp:127 utils/qapt-batch/qaptbatch.cpp:254
+#, kde-format
+msgctxt "@label"
+msgid ""
+"The package \"%1\" has not been found among your software sources. "
+"Therefore, it cannot be installed. "
+msgstr ""
+"\"%1\" paketi yazılım kaynaklarınızda bulunamadığından, kurulum yapılamaz."
+
+#: utils/qapt-batch/qaptbatch.cpp:130 utils/qapt-batch/qaptbatch.cpp:257
+#, kde-format
+msgctxt "@title:window"
+msgid "Package Not Found"
+msgstr "Paket Bulunamadı"
+
+#: utils/qapt-batch/qaptbatch.cpp:195
+#, kde-format
+msgctxt "@label"
+msgid ""
+"Another application seems to be using the package system at this time. You "
+"must close all other package managers before you will be able to install or "
+"remove any packages."
+msgstr ""
+"Şuanda başka bir uygulama paket sistemini kullanıyor gibi görünüyor. Bir "
+"paket kurmak ya da kaldırabilmek için diğer tüm paket yöneticilerini "
+"kapatmanız gerekli."
+
+#: utils/qapt-batch/qaptbatch.cpp:199
+#, kde-format
+msgctxt "@title:window"
+msgid "Unable to obtain package system lock"
+msgstr "Paket sistem kilidi alınamadı"
+
+#: utils/qapt-batch/qaptbatch.cpp:204
+#, kde-format
+msgctxt "@label"
+msgid ""
+"You do not have enough disk space in the directory at %1 to continue with "
+"this operation."
+msgstr "Bu işleme devam etmek için %1 dizininde yeterli disk alanınız yok."
+
+#: utils/qapt-batch/qaptbatch.cpp:206
+#, kde-format
+msgctxt "@title:window"
+msgid "Low disk space"
+msgstr "Düşük disk alanı"
+
+#: utils/qapt-batch/qaptbatch.cpp:211
+#, kde-format
+msgctxt "@label"
+msgid "Could not download packages"
+msgstr "Paketler indirilemedi"
+
+#: utils/qapt-batch/qaptbatch.cpp:212
+#, kde-format
+msgctxt "@title:window"
+msgid "Download failed"
+msgstr "İndirme başarısız"
+
+#: utils/qapt-batch/qaptbatch.cpp:216
+#, kde-format
+msgctxt "@label"
+msgid "An error occurred while applying changes:"
+msgstr "Değişiklikler uygulanırken bir hata oluştu:"
+
+#: utils/qapt-batch/qaptbatch.cpp:217
+#, kde-format
+msgctxt "@title:window"
+msgid "Commit error"
+msgstr "Gönderim hatası"
+
+#: utils/qapt-batch/qaptbatch.cpp:222
+#, kde-format
+msgctxt "@label"
+msgid ""
+"This operation cannot continue since proper authorization was not provided"
+msgstr "Geçerli yetkilendirme sağlanmadığından bu işlem devam edemez"
+
+#: utils/qapt-batch/qaptbatch.cpp:224
+#, kde-format
+msgctxt "@title:window"
+msgid "Authentication error"
+msgstr "Yetkilendirme hatası"
+
+#: utils/qapt-batch/qaptbatch.cpp:228
+#, kde-format
+msgctxt "@label"
+msgid ""
+"It appears that the QApt worker has either crashed or disappeared. Please "
+"report a bug to the QApt maintainers"
+msgstr ""
+"QApt çalışanı çökmüş veya kaybolmuş gibi görünüyor. Lütfen QApt "
+"bakımcılarına bir hata raporu gönderin"
+
+#: utils/qapt-batch/qaptbatch.cpp:230
+#, kde-format
+msgctxt "@title:window"
+msgid "Unexpected Error"
+msgstr "Beklenmeyen Hata"
+
+#: utils/qapt-batch/qaptbatch.cpp:238
+#, kde-format
+msgctxt "@label"
+msgid ""
+"The following package has not been verified by its author. Downloading "
+"untrusted packages has been disallowed by your current configuration."
+msgid_plural ""
+"The following packages have not been verified by their authors. Downloading "
+"untrusted packages has been disallowed by your current configuration."
+msgstr[0] ""
+"Bu paket yazarı tarafından doğrulanmadı. Şimdiki yapılandırmanız "
+"güvenilmeyen paketlerin indirilmesine izin vermiyor."
+msgstr[1] ""
+"Bu paketler yazarı tarafından doğrulanmadı. Şimdiki yapılandırmanız "
+"güvenilmeyen paketlerin indirilmesine izin vermiyor."
+
+#: utils/qapt-batch/qaptbatch.cpp:247
+#, kde-format
+msgctxt "@title:window"
+msgid "Untrusted Packages"
+msgstr "Güvenilmeyen Paketler"
+
+#: utils/qapt-batch/qaptbatch.cpp:270
+#, kde-format
+msgctxt "@title:window"
+msgid "Media Change Required"
+msgstr "Ortamı Değiştirmeniz Gerekiyor"
+
+#: utils/qapt-batch/qaptbatch.cpp:271
+#, kde-kuit-format
+msgctxt "@label"
+msgid "Please insert %1 into <filename>%2</filename>"
+msgstr "Lütfen %1 ortamını <filename>%2</filename> içine yerleştirin"
+
+#: utils/qapt-batch/qaptbatch.cpp:279
+#, kde-format
+msgctxt "@title:window"
+msgid "Warning - Unverified Software"
+msgstr "Uyarı - Doğrulanmayan Yazılım"
+
+#: utils/qapt-batch/qaptbatch.cpp:281
+#, kde-kuit-format
+msgctxt "@label"
+msgid ""
+"The following piece of software cannot be verified. <warning>Installing "
+"unverified software represents a security risk, as the presence of "
+"unverifiable software can be a sign of tampering.</warning> Do you wish to "
+"continue?"
+msgid_plural ""
+"The following pieces of software cannot be authenticated. "
+"<warning>Installing unverified software represents a security risk, as the "
+"presence of unverifiable software can be a sign of tampering.</warning> Do "
+"you wish to continue?"
+msgstr[0] ""
+"Aşağıdaki yazılım parçası doğrulanamdı. <warning>Doğrulanmamış paketleri "
+"kurmak bir güvenlik riskidir ve doğrulanamayan yazılım bir hilenin "
+"göstergesidir.</warning> Devam etmek istiyor musunuz?"
+msgstr[1] ""
+"Aşağıdaki yazılım parçaları doğrulanamdı. <warning>Doğrulanmamış paketleri "
+"kurmak bir güvenlik riskidir ve doğrulanamayan yazılım bir hilenin "
+"göstergesidir.</warning> Devam etmek istiyor musunuz?"
+
+#: utils/qapt-batch/qaptbatch.cpp:316
+#, kde-format
+msgctxt "@label Progress bar label when waiting to start"
+msgid "Waiting to start."
+msgstr "Başlamak için bekleniyor."
+
+#: utils/qapt-batch/qaptbatch.cpp:321
+#, kde-format
+msgctxt "@label Status label when waiting for a password"
+msgid "Waiting for authentication."
+msgstr "Kimlik doğrulama bekleniyor."
+
+#: utils/qapt-batch/qaptbatch.cpp:325
+#, kde-format
+msgctxt "@label Status label when waiting for a CD-ROM"
+msgid "Waiting for required media."
+msgstr "Gerekli ortam bekleniyor."
+
+#: utils/qapt-batch/qaptbatch.cpp:330
+#, kde-format
+msgctxt "@label Status label"
+msgid "Waiting for other package managers to quit."
+msgstr "Diğer yazılım yöneticilerin çıkması bekleniyor."
+
+#: utils/qapt-batch/qaptbatch.cpp:338
+#, kde-format
+msgctxt "@label Status label"
+msgid "Loading package cache."
+msgstr "Paket önbelleği yükleniyor."
+
+#: utils/qapt-batch/qaptbatch.cpp:342
+#, kde-format
+msgctxt "@title:window"
+msgid "Refreshing Package Information"
+msgstr "Paket Bilgisi Yenileniyor"
+
+#: utils/qapt-batch/qaptbatch.cpp:343
+#, kde-format
+msgctxt "@info:status"
+msgid "Checking for new, removed or upgradeable packages"
+msgstr "Yeni, kaldırılmış ve yükseltilebilir paketler aranıyor"
+
+#: utils/qapt-batch/qaptbatch.cpp:345
+#, kde-format
+msgctxt "@title:window"
+msgid "Downloading"
+msgstr "İndiriliyor"
+
+#: utils/qapt-batch/qaptbatch.cpp:347
+#, kde-format
+msgctxt "@info:status"
+msgid "Downloading package file"
+msgid_plural "Downloading package files"
+msgstr[0] "Paket dosyası indiriliyor"
+msgstr[1] "Paket dosyaları indiriliyor"
+
+#: utils/qapt-batch/qaptbatch.cpp:355
+#, kde-format
+msgctxt "@title:window"
+msgid "Installing Packages"
+msgstr "Paketler Kuruluyor"
+
+#: utils/qapt-batch/qaptbatch.cpp:360
+#, kde-format
+msgctxt "@title:window"
+msgid "Installation Complete"
+msgstr "Kurulum Tamamlandı"
+
+#: utils/qapt-batch/qaptbatch.cpp:364
+#, kde-format
+msgctxt "@label"
+msgid "Package installation failed."
+msgstr "Paket kurulumu başarısız."
+
+#: utils/qapt-batch/qaptbatch.cpp:367
+#, kde-format
+msgctxt "@label"
+msgid "Package successfully installed."
+msgid_plural "Packages successfully installed."
+msgstr[0] "Paket başarıyla kuruldu."
+msgstr[1] "Paketler başarıyla kuruldu."
+
+#: utils/qapt-batch/qaptbatch.cpp:371
+#, kde-format
+msgctxt "@title:window"
+msgid "Removal Complete"
+msgstr "Kaldırma Başarılı"
+
+#: utils/qapt-batch/qaptbatch.cpp:375
+#, kde-format
+msgctxt "@label"
+msgid "Package removal failed."
+msgstr "Paket kaldırma başarısız."
+
+#: utils/qapt-batch/qaptbatch.cpp:379
+#, kde-format
+msgctxt "@label"
+msgid "Package successfully uninstalled."
+msgid_plural "Packages successfully uninstalled."
+msgstr[0] "Paket başarıyla kaldırıldı."
+msgstr[1] "Paketler başarıyla kaldırıldı."
+
+#: utils/qapt-batch/qaptbatch.cpp:383
+#, kde-format
+msgctxt "@title:window"
+msgid "Refresh Complete"
+msgstr "Yenileme Tamamlandı"
+
+#: utils/qapt-batch/qaptbatch.cpp:386
+#, kde-format
+msgctxt "@info:status"
+msgid "Refresh failed."
+msgstr "Yenileme başarısız."
+
+#: utils/qapt-batch/qaptbatch.cpp:388
+#, kde-format
+msgctxt "@label"
+msgid "Package information successfully refreshed."
+msgstr "Paket bilgisi başarıyla yenilendi."
