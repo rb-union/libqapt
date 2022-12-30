@@ -1,4 +1,3 @@
-# SymbolsHelper-Confirmed: 3.0.5 amd64
 libQApt.so.3 libqapt3 #MINVER#
 * Build-Depends-Package: libqapt-dev
  _ZN4QApt11HistoryItemC1ERK7QString@Base 3.0.0
@@ -421,6 +420,7 @@ libQApt.so.3 libqapt3 #MINVER#
  _ZNK4QApt7Package17availableVersionsEv@Base 3.0.0
  _ZNK4QApt7Package18installedFilesListEv@Base 3.0.0
  _ZNK4QApt7Package19multiArchTypeStringEv@Base 3.0.0
+ _ZNK4QApt7Package19providesListEnhanceEv@Base 3.0.5-1+deepin1~
  _ZNK4QApt7Package20currentInstalledSizeEv@Base 3.0.0
  _ZNK4QApt7Package20isMultiArchDuplicateEv@Base 3.0.0
  _ZNK4QApt7Package22availableInstalledSizeEv@Base 3.0.0
@@ -447,9 +447,6 @@ libQApt.so.3 libqapt3 #MINVER#
  _ZNK4QApt9Changelog15newEntriesSinceERK7QString@Base 3.0.0
  _ZNK4QApt9Changelog4textEv@Base 3.0.0
  _ZNK4QApt9Changelog7entriesEv@Base 3.0.0
- (optional=templinst|subst)_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineI{size_t}L{size_t}16807EL{size_t}0EL{size_t}2147483647EEEEiRT_RKNS0_10param_typeE@Base 3.0.1
- (optional=templinst)_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag@Base 3.0.5
- (optional=templinst)_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag@Base 3.0.5
  _ZTIN4QApt11SourcesListE@Base 3.0.0
  _ZTIN4QApt11TransactionE@Base 3.0.0
  _ZTIN4QApt6ConfigE@Base 3.0.0

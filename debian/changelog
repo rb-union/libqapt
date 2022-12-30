@@ -1,3 +1,11 @@
+libqapt (3.0.5-1+deepin1~) unstable; urgency=medium
+
+  * Add dde-polkit-agent depend for libqapt3-runtime
+  * Add patch 0001-add-zh_CN-translate.patch
+  * Add patch 0002-add-interface-get-provides-version.patch
+
+ -- wangzhengyang <wangzhengyang@uniontech.com>  Fri, 30 Dec 2022 11:08:09 +0800
+
 libqapt (3.0.5-1) unstable; urgency=medium
 
   * Team upload.
