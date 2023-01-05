@@ -1,3 +1,8 @@
+libqapt (3.0.5.1-1-deepin1) unstable; urgency=medium
+
+  * New version 3.0.5.1-1-deepin1
+
+ -- huangzhenglin <huangzhenglin@uniontech.com>  Wed, 4 Jan 2023 16:35:35 +0800
 libqapt (3.0.5-1+deepin1~) unstable; urgency=medium
 
   * Add dde-polkit-agent depend for libqapt3-runtime
