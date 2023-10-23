@@ -1,3 +1,10 @@
+libqapt (3.0.5.2-deepin2) unstable; urgency=medium
+
+  * Add unistd.h to avoid build errors on aarch64 architecture.
+    - Add patch 0003-add-unistd-header-fix-arm64-error.patch
+
+ -- renbin <renbin@uniontech.com>  Mon, 23 Oct 2023 16:36:14 +0800
+
 libqapt (3.0.5.1-1-deepin1) unstable; urgency=medium
 
   * New version 3.0.5.1-1-deepin1
