@@ -1,0 +1,122 @@
+Description: Change DBus service.
+ Add systemd service, limit memory use.
+ Change polkit actions, disable all allow_any/allow_inactive.
+Forwarded: not-needed
+Last-Update: 2023-12-15
+
+---
+ debian/libqapt3-runtime.install                 |    1 +
+ src/worker/CMakeLists.txt                       |    6 ++++++
+ src/worker/kubuntu-qaptworker.service.cmake     |   14 ++++++++++++++
+ src/worker/org.kubuntu.qaptworker.policy.cmake  |    9 ++++++---
+ src/worker/org.kubuntu.qaptworker.service.cmake |    5 ++---
+ src/worker/qaptworker.actions.cmake             |    2 +-
+ 6 files changed, 30 insertions(+), 7 deletions(-)
+
+--- a/src/worker/CMakeLists.txt
++++ b/src/worker/CMakeLists.txt
+@@ -4,6 +4,8 @@
+     ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.xml)
+ configure_file(org.kubuntu.qaptworker.service.cmake
+     ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.service)
++configure_file(kubuntu-qaptworker.service.cmake
++    ${CMAKE_CURRENT_BINARY_DIR}/kubuntu-qaptworker.service)
+ configure_file(qaptworker.actions.cmake
+     ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.actions)
+ configure_file(org.kubuntu.qaptworker.policy.cmake
+@@ -58,6 +60,10 @@
+ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.service
+         DESTINATION ${DBUS_SYSTEM_SERVICES_INSTALL_DIR})
+ 
++# install systemd service -> /lib/systemd/system
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kubuntu-qaptworker.service
++        DESTINATION /lib/systemd/system)
++
+ if(KF5Auth_FOUND)
+     kauth_install_actions(${QAPT_WORKER_RDN_VERSIONED} ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.actions)
+     # Add translations from other countries and regions to the policy file
+--- /dev/null
++++ b/src/worker/kubuntu-qaptworker.service.cmake
+@@ -0,0 +1,14 @@
++[Unit]
++Description=KUbuntu qaptworker daemon service
++
++[Service]
++Type=dbus
++BusName=@QAPT_WORKER_RDN_VERSIONED@
++ExecStart=/usr/bin/qaptworker@QAPT_WORKER_VERSION@
++StandardOutput=syslog
++# Can not detect all package script or install actions.
++CapabilityBoundingSet=~
++MemoryLimit=8G
++
++[Install]
++WantedBy=mulit-user.target
+--- a/src/worker/org.kubuntu.qaptworker.policy.cmake
++++ b/src/worker/org.kubuntu.qaptworker.policy.cmake
+@@ -10,8 +10,9 @@
+     <description>Update software sources</description>
+     <message>Update software sources</message>
+     <defaults>
++      <allow_any>no</allow_any>
+       <allow_inactive>no</allow_inactive>
+-      <allow_active>yes</allow_active>
++      <allow_active>auth_admin_keep</allow_active>
+     </defaults>
+   </action>
+   <action id="@QAPT_WORKER_RDN_VERSIONED@.commitchanges">
+@@ -20,6 +21,7 @@
+     <message>Install or remove packages</message>
+     <message xml:lang="zh_CN">安装或移除软件包需要授权</message>
+     <defaults>
++      <allow_any>no</allow_any>
+       <allow_inactive>no</allow_inactive>
+       <allow_active>auth_admin_keep</allow_active>
+     </defaults>
+@@ -28,6 +30,7 @@
+     <description>Change system settings</description>
+     <message>Change system settings</message>
+     <defaults>
++      <allow_any>no</allow_any>
+       <allow_inactive>no</allow_inactive>
+       <allow_active>auth_admin_keep</allow_active>
+     </defaults>
+@@ -36,8 +39,8 @@
+     <description>Cancel the task of another user</description>
+     <message> To cancel someone else's software changes, you need to authenticate.</message>
+     <defaults>
+-      <allow_any>auth_admin</allow_any>
+-      <allow_inactive>auth_admin</allow_inactive>
++      <allow_any>no</allow_any>
++      <allow_inactive>no</allow_inactive>
+       <allow_active>auth_admin</allow_active>
+     </defaults>
+   </action>
+--- a/src/worker/org.kubuntu.qaptworker.service.cmake
++++ b/src/worker/org.kubuntu.qaptworker.service.cmake
+@@ -1,5 +1,4 @@
+ [D-BUS Service]
+ Name=@QAPT_WORKER_RDN_VERSIONED@
+-Exec=/usr/bin/qaptworker@QAPT_WORKER_VERSION@
+-User=root
+-
++Exec=/usr/bin/false
++SystemdService=kubuntu-qaptworker.service
+--- a/debian/libqapt3-runtime.install
++++ b/debian/libqapt3-runtime.install
+@@ -2,3 +2,4 @@
+ usr/bin/qaptworker3
+ usr/share/dbus-1/system-services/org.kubuntu.qaptworker3.service
+ usr/share/polkit-1/actions/org.kubuntu.qaptworker3.policy
++lib/systemd/system/kubuntu-qaptworker.service
+--- a/src/worker/qaptworker.actions.cmake
++++ b/src/worker/qaptworker.actions.cmake
+@@ -125,7 +125,7 @@
+ Description[zh_CN]=更新软件分类需要您进行认证。
+ Description[zh_TW]=要更新軟體類別，您必須通過認證。
+ Description[zh_HK]=更新軟件分類需要您進行認證。
+-Policy=yes
++Policy=auth_admin
+ Persistence=session
+ 
+ [@QAPT_WORKER_RDN_VERSIONED@.commitchanges]

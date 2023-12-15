@@ -1,3 +1,12 @@
+libqapt (3.0.4.11-deepin1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * debian/patches
+    + fetaure patch uniontech0006_dbus_security_standard.patch
+    Change DBus service and polkit actions.
+
+ -- renbin <renbin@uniontech.com>  Fri, 15 Dec 2023 15:41:12 +0800
+
 libqapt (3.0.4.10-deepin1) unstable; urgency=medium
 
   * Non-maintainer upload.
