@@ -5,13 +5,12 @@ Forwarded: not-needed
 Last-Update: 2023-12-15
 
 ---
- debian/libqapt3-runtime.install                 |    1 +
  src/worker/CMakeLists.txt                       |    6 ++++++
  src/worker/kubuntu-qaptworker.service.cmake     |   14 ++++++++++++++
  src/worker/org.kubuntu.qaptworker.policy.cmake  |    9 ++++++---
  src/worker/org.kubuntu.qaptworker.service.cmake |    5 ++---
  src/worker/qaptworker.actions.cmake             |    2 +-
- 6 files changed, 30 insertions(+), 7 deletions(-)
+ 5 files changed, 29 insertions(+), 7 deletions(-)
 
 --- a/src/worker/CMakeLists.txt
 +++ b/src/worker/CMakeLists.txt
@@ -102,13 +101,6 @@ Last-Update: 2023-12-15
 -
 +Exec=/usr/bin/false
 +SystemdService=kubuntu-qaptworker.service
---- a/debian/libqapt3-runtime.install
-+++ b/debian/libqapt3-runtime.install
-@@ -2,3 +2,4 @@
- usr/bin/qaptworker3
- usr/share/dbus-1/system-services/org.kubuntu.qaptworker3.service
- usr/share/polkit-1/actions/org.kubuntu.qaptworker3.policy
-+lib/systemd/system/kubuntu-qaptworker.service
 --- a/src/worker/qaptworker.actions.cmake
 +++ b/src/worker/qaptworker.actions.cmake
 @@ -125,7 +125,7 @@
