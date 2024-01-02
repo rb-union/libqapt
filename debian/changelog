@@ -1,3 +1,10 @@
+libqapt (3.0.4.12-deepin1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * fix: Disable systemd service start on boot.(Bug: 237143)
+
+ -- renbin <renbin@uniontech.com>  Tue, 02 Jan 2024 09:29:58 +0800
+
 libqapt (3.0.4.11-deepin1) unstable; urgency=medium
 
   * Non-maintainer upload.

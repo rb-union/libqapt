@@ -6,11 +6,11 @@ Last-Update: 2023-12-15
 
 ---
  src/worker/CMakeLists.txt                       |    6 ++++++
- src/worker/kubuntu-qaptworker.service.cmake     |   14 ++++++++++++++
+ src/worker/kubuntu-qaptworker.service.cmake     |   11 +++++++++++
  src/worker/org.kubuntu.qaptworker.policy.cmake  |    9 ++++++---
  src/worker/org.kubuntu.qaptworker.service.cmake |    5 ++---
  src/worker/qaptworker.actions.cmake             |    2 +-
- 5 files changed, 29 insertions(+), 7 deletions(-)
+ 5 files changed, 26 insertions(+), 7 deletions(-)
 
 --- a/src/worker/CMakeLists.txt
 +++ b/src/worker/CMakeLists.txt
@@ -36,7 +36,7 @@ Last-Update: 2023-12-15
      # Add translations from other countries and regions to the policy file
 --- /dev/null
 +++ b/src/worker/kubuntu-qaptworker.service.cmake
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,11 @@
 +[Unit]
 +Description=KUbuntu qaptworker daemon service
 +
@@ -48,9 +48,6 @@ Last-Update: 2023-12-15
 +# Can not detect all package script or install actions.
 +CapabilityBoundingSet=~
 +MemoryLimit=8G
-+
-+[Install]
-+WantedBy=mulit-user.target
 --- a/src/worker/org.kubuntu.qaptworker.policy.cmake
 +++ b/src/worker/org.kubuntu.qaptworker.policy.cmake
 @@ -10,8 +10,9 @@
