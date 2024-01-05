@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+# The source script is from dh_installsystemd.
+# Unmask and start systemd service, qapt not provides start on boot.
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ]; then
+	echo "Inst($1): Unmask and disable kubuntu-qaptworker.service..."
+	if [ -x "/usr/bin/deb-systemd-helper" ]; then
+		deb-systemd-helper unmask 'kubuntu-qaptworker.service' >/dev/null || true
+		deb-systemd-helper disable kubuntu-qaptworker.service >/dev/null || true
+		deb-systemd-helper update-state kubuntu-qaptworker.service >/dev/null || true
+		echo "Inst($1): Unmask and disable kubuntu-qaptworker.service."
+	fi
+fi
+
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ]; then
+	if [ -d /run/systemd/system ]; then
+		systemctl --system daemon-reload >/dev/null || true
+	fi
+fi

@@ -1,3 +1,11 @@
+libqapt (3.0.4.13-deepin1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * fix: use postinst/postrm instead of dh_installsystemd.
+         Avoid restart service on installing.
+
+ -- renbin <renbin@uniontech.com>  Fri, 05 Jan 2024 10:41:34 +0800
+
 libqapt (3.0.4.12-deepin1) unstable; urgency=medium
 
   * Non-maintainer upload.

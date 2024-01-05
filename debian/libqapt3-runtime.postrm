@@ -1,0 +1,24 @@
+#!/bin/sh
+set -e
+
+# The source script is from dh_installsystemd.
+if [ -d /run/systemd/system ]; then
+	systemctl --system daemon-reload >/dev/null || true
+fi
+
+# Unmask systemd service, postrm might called twice. ("remove", "purge")
+if [ "$1" = "remove" ]; then
+	echo "Rm(remove): Mask kubuntu-qaptworker.service..."
+	if [ -x "/usr/bin/deb-systemd-helper" ]; then
+		deb-systemd-helper mask kubuntu-qaptworker.service >/dev/null || true
+		echo "Rm(remove): Mask kubuntu-qaptworker.service."
+	fi
+fi
+
+if [ "$1" = "purge" ]; then
+	echo "Rm(purge): Unmask kubuntu-qaptworker.service..."
+	if [ -x "/usr/bin/deb-systemd-helper" ]; then
+		deb-systemd-helper unmask kubuntu-qaptworker.service >/dev/null || true
+		echo "Rm(purge): Unmask kubuntu-qaptworker.service."
+	fi
+fi
