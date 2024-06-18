@@ -1,3 +1,11 @@
+libqapt (3.0.4.14-deepin1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * fix: use the dpkg parameter --script-ignore-error.
+         ignore third-party package postinst error.
+
+ -- muyuankai <muyuankai@uniontech.com>  Tue, 18 Jun 2024 16:04:18 +0800
+
 libqapt (3.0.4.13-deepin1) unstable; urgency=medium
 
   * Non-maintainer upload.
