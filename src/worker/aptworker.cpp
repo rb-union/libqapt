@@ -443,6 +443,13 @@ void AptWorker::commitChanges()
     WorkerAcquire *acquire = new WorkerAcquire(this, 15, 50);
     acquire->setTransaction(m_trans);
 
+    if (!m_trans->envVariable().isEmpty()) {
+        QMap<QString, QVariant> env = m_trans->envVariable();
+        foreach (auto str, env.keys()) {
+            setenv(str.toLocal8Bit(), env[str].toString().toLocal8Bit(), 1);
+        }
+    }
+
     pkgAcquire fetcher;
     fetcher.Setup(acquire);
 
@@ -659,6 +666,13 @@ void AptWorker::installFile()
     setenv("PATH", "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", 1);
     setenv("DEBIAN_FRONTEND", "passthrough", 1);
     setenv("DEBCONF_PIPE", "/tmp/qapt-sock", 1);
+    QProcess process(this);
+    process.start(QLatin1String("dpkg --script-ignore-error --audit"));
+    process.waitForFinished(-1);
+    if(process.exitCode() == 0) {
+        program = QLatin1String("dpkg") %
+            QLatin1String(" -i --script-ignore-error ") % '"' % m_trans->filePath() % '"';
+    }
     m_dpkgProcess->start(program);
     connect(m_dpkgProcess, SIGNAL(started()), this, SLOT(dpkgStarted()));
     connect(m_dpkgProcess, SIGNAL(readyRead()), this, SLOT(updateDpkgProgress()));

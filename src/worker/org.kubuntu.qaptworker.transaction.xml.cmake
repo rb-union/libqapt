@@ -27,6 +27,9 @@
     <property name="filePath" type="s" access="read"/>
     <property name="errorDetails" type="s" access="read"/>
     <property name="frontendCaps" type="i" access="read"/>
+    <property name="envVariable" type="a{sv}" access="read">
+	<annotation name="org.qtproject.QtDBus.QtTypeName" value="QVariantMap"/>
+    </property>
     <signal name="propertyChanged">
       <arg name="role" type="i" direction="out"/>
       <arg name="newValue" type="v" direction="out"/>
@@ -48,6 +51,10 @@
     <method name="setProperty">
       <arg name="property" type="i" direction="in"/>
       <arg name="value" type="v" direction="in"/>
+    </method>
+    <method name="setEnvVariable">
+      <arg name="name" type="s" direction="in"/>
+      <arg name="value" type="s" direction="in"/>
     </method>
     <method name="run">
     </method>

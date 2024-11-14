@@ -248,7 +248,9 @@ namespace QApt
         /// QString, the string describing the current error in detail
         ErrorDetailsProperty,
         /// int, the frontend capabilities for the transaction
-        FrontendCapsProperty
+        FrontendCapsProperty,
+	///QString, the Enviroment Variable (e.g. $HOME) for transaction
+    	EnvVariableProperty
     };
 
     /**

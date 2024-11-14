@@ -23,6 +23,7 @@
 // Qt includes
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
+#include <QProcess>
 
 // Apt-pkg includes
 #include <apt-pkg/configuration.h>
@@ -35,7 +36,7 @@
 #include "workeradaptor.h"
 #include "urihelper.h"
 
-#define IDLE_TIMEOUT 30000 // 30 seconds
+#define IDLE_TIMEOUT 60*60*1000 // 30 seconds
 
 WorkerDaemon::WorkerDaemon(int &argc, char **argv)
     : QCoreApplication(argc, argv)
@@ -45,6 +46,10 @@ WorkerDaemon::WorkerDaemon(int &argc, char **argv)
 {
     m_worker = new AptWorker(nullptr);
     m_queue = new TransactionQueue(this, m_worker);
+
+    m_TransTimer = 0;
+    m_Deepin_deb_installer_PID = 0;
+    m_IDLE_TIMEOUT = getIdleTimeout()*1000;
 
     m_workerThread = new QThread(this);
     m_worker->moveToThread(m_workerThread);
@@ -96,12 +101,68 @@ int WorkerDaemon::dbusSenderUid() const
     return connection().interface()->serviceUid(message().service()).value();
 }
 
+void WorkerDaemon::setTransTimer(quint64 timer)
+{
+    m_TransTimer = timer;
+}
+
+int WorkerDaemon::getIdleTimeout()
+{
+    QString confpath("/etc/libqapt3/libqapt3.conf");
+    //the timeout default value is 30 seconds.
+    int result=30;
+    if (QFile::exists(confpath))
+    {
+        QSettings confinfo(confpath,QSettings::IniFormat);
+        QString tmp_TimeOut = confinfo.value("/basic_auth_config/expand_time").toString();
+        if (!tmp_TimeOut.isEmpty())
+            result = tmp_TimeOut.toInt()*60;
+    }
+    return result;
+}
+
+bool WorkerDaemon::judgeAuthen()
+{
+    //Determine whether authentication is required
+    //get PID of deepin_deb_installer 
+    QProcess process;
+    QStringList options;
+    QString tmp_PID("");
+
+    options<<"-c" <<"ps aux --sort -uid |grep deepin-deb-installer |head -n 1 |awk '{print $2}'";
+    process.start("/bin/bash", options);
+    process.waitForFinished();
+    tmp_PID = process.readAllStandardOutput();
+    tmp_PID.remove(QChar('\n'), Qt::CaseInsensitive);
+    
+    //judge if need to get the user authentication.
+    if (m_Deepin_deb_installer_PID != tmp_PID.toInt())
+    {
+        //if tmp_PID != m_Deepin_deb_installer_PID , means the deepin_deb_installer is reopen and need
+        //to get the user authentication.
+        m_Deepin_deb_installer_PID = tmp_PID.toInt();
+        m_TransTimer = 0;
+        return true;
+    }
+    else
+    {
+        //if pid is the same. Then need to judge the difference between the last authentication time 
+        //and current time, if it is greater than the set value, means need to get user authentication.
+        quint64 currentTime = QDateTime::currentMSecsSinceEpoch();
+        if (currentTime - m_TransTimer > m_IDLE_TIMEOUT)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 Transaction *WorkerDaemon::createTransaction(QApt::TransactionRole role, QVariantMap instructionsList)
 {
     int uid = dbusSenderUid();
 
     // Create a transaction. It will add itself to the queue
-    Transaction *trans = new Transaction(m_queue, uid, role, instructionsList);
+    Transaction *trans = new Transaction(m_queue, uid, role, instructionsList, this);
     trans->setService(message().service());
 
     return trans;
@@ -157,6 +218,23 @@ bool WorkerDaemon::writeFileToDisk(const QString &contents, const QString &path)
     if (!QApt::Auth::authorize(dbusActionUri("writefiletodisk"), message().service())) {
         qDebug() << "Failed to authorize!!";
         return false;
+    }
+
+	QString file_path;
+	QFileInfo f;
+	f = QFileInfo(path);
+	file_path = f.absolutePath();
+    QList<QString> whitelist;
+    quint8 allow_write_flag = 0;
+    whitelist<<"/etc/apt/";
+    for( int i=0; i< whitelist.size(); ++i){
+        if(file_path.startsWith (whitelist[i], Qt::CaseSensitive)){
+            allow_write_flag = 1;
+        } 
+    }
+    if(allow_write_flag == 0){
+        qDebug()<< "Refuse to write";
+        return false ;
     }
 
     QFile file(path);

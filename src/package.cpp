@@ -1063,6 +1063,23 @@ QStringList Package::providesList() const
    return provides;
 }
 
+QMap<QString, QString> Package::providesListEnhance() const
+{
+    pkgDepCache::StateCache &State = (*d->backend->cache()->depCache())[d->packageIter];
+    if (!State.CandidateVer) {
+        return {};
+    }
+
+    QMap<QString, QString> provides;
+
+    for (pkgCache::PrvIterator Prv =
+         State.CandidateVerIter(*d->backend->cache()->depCache()).ProvidesList(); !Prv.end(); ++Prv) {
+        provides.insert(QLatin1String(Prv.Name()), QLatin1String(Prv.ProvideVersion()));
+    }
+
+   return provides;
+}
+
 QStringList Package::recommendsList() const
 {
     QStringList recommends;

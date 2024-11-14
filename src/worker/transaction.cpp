@@ -31,6 +31,7 @@
 #include "transactionadaptor.h"
 #include "transactionqueue.h"
 #include "worker/urihelper.h"
+#include "workerdaemon.h"
 
 #define IDLE_TIMEOUT 30000 // 30 seconds
 
@@ -67,6 +68,56 @@ Transaction::Transaction(TransactionQueue *queue, int userId,
     // Remove parts of the uuid that can't be part of a D-Bus path
     tid.remove('{').remove('}').remove('-');
     m_tid = "/org/kubuntu/qaptworker/transaction" + tid;
+
+    if (!connection.registerObject(m_tid, this))
+        qWarning() << "Unable to register transaction on DBus";
+
+    m_roleActionMap[QApt::EmptyRole] = QString("");
+    m_roleActionMap[QApt::UpdateCacheRole] = dbusActionUri("updatecache");
+    m_roleActionMap[QApt::UpgradeSystemRole] = dbusActionUri("commitchanges");
+    m_roleActionMap[QApt::CommitChangesRole] = dbusActionUri("commitchanges");
+    m_roleActionMap[QApt::DownloadArchivesRole] = QString("");
+    m_roleActionMap[QApt::InstallFileRole] = dbusActionUri("commitchanges");
+
+    m_queue->addPending(this);
+    m_idleTimer = new QTimer(this);
+    m_idleTimer->start(IDLE_TIMEOUT);
+    connect(m_idleTimer, SIGNAL(timeout()),
+            this, SLOT(emitIdleTimeout()));
+}
+
+Transaction::Transaction(TransactionQueue *queue, int userId,
+                         QApt::TransactionRole role, QVariantMap packagesList,
+                         WorkerDaemon *workerdaemon)
+    : QObject(queue)
+    , m_queue(queue)
+    , m_uid(userId)
+    , m_role(role)
+    , m_status(QApt::SetupStatus)
+    , m_error(QApt::Success)
+    , m_packages(packagesList)
+    , m_isCancellable(true)
+    , m_isCancelled(false)
+    , m_exitStatus(QApt::ExitUnfinished)
+    , m_isPaused(false)
+    , m_progress(0)
+    , m_allowUntrusted(false)
+    , m_downloadSpeed(0)
+    , m_safeUpgrade(true)
+    , m_replaceConfFile(false)
+    , m_frontendCaps(QApt::NoCaps)
+    , m_dataMutex(QMutex::Recursive)
+{
+    new TransactionAdaptor(this);
+    QDBusConnection connection = QDBusConnection::systemBus();
+
+    QString tid = QUuid::createUuid().toString();
+    // Remove parts of the uuid that can't be part of a D-Bus path
+    tid.remove('{').remove('}').remove('-');
+    m_tid = "/org/kubuntu/qaptworker/transaction" + tid;
+    //m_timeT = 0; //初始化时间戳
+
+    m_workerDaemon = workerdaemon;
 
     if (!connection.registerObject(m_tid, this))
         qWarning() << "Unable to register transaction on DBus";
@@ -464,6 +515,18 @@ void Transaction::setErrorDetails(const QString &errorDetails)
     emit propertyChanged(QApt::ErrorDetailsProperty, QDBusVariant(errorDetails));
 }
 
+QVariantMap Transaction::envVariable()
+{
+    return m_envVariable;
+}
+
+void Transaction::setEnvVariable(const QString &envVariableName, const QString &envVariableValue)
+{
+    m_envVariable.insert(envVariableName, envVariableValue);
+    setenv(envVariableName.toLocal8Bit(), envVariableValue.toLocal8Bit(), 1);
+    emit propertyChanged(QApt::EnvVariableProperty, QDBusVariant(m_envVariable));
+}
+
 bool Transaction::safeUpgrade() const
 {
     return m_safeUpgrade;
@@ -519,7 +582,19 @@ bool Transaction::authorizeRun()
 
     setStatus(QApt::AuthenticationStatus);
 
-    return QApt::Auth::authorize(action, m_service);
+    if (m_workerDaemon->judgeAuthen())
+    {
+        if(QApt::Auth::authorize(action, m_service))
+        {
+            m_workerDaemon->setTransTimer(QDateTime::currentMSecsSinceEpoch());
+            return true;
+        }
+        return false;
+    }
+    else
+    {
+        return true;
+    }
 }
 
 void Transaction::setProperty(int property, QDBusVariant value)
@@ -557,6 +632,12 @@ void Transaction::setProperty(int property, QDBusVariant value)
     case QApt::FrontendCapsProperty:
         setFrontendCaps(value.variant().toInt());
         break;
+    case QApt::EnvVariableProperty: {
+        for (auto key : value.variant().toMap().keys()) {
+            setEnvVariable(key, value.variant().toMap().value(key).toString());
+        }
+    }
+    break;
     default:
         sendErrorReply(QDBusError::InvalidArgs);
         break;

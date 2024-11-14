@@ -4,6 +4,8 @@ configure_file(org.kubuntu.qaptworker.xml.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.xml)
 configure_file(org.kubuntu.qaptworker.service.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.service)
+configure_file(kubuntu-qaptworker.service.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/kubuntu-qaptworker.service)
 configure_file(qaptworker.actions.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.actions)
 configure_file(org.kubuntu.qaptworker.policy.cmake
@@ -57,6 +59,10 @@ install(TARGETS qaptworker${QAPT_WORKER_VERSION} DESTINATION ${CMAKE_INSTALL_PRE
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.service
         DESTINATION ${DBUS_SYSTEM_SERVICES_INSTALL_DIR})
+
+# install systemd service -> /lib/systemd/system
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kubuntu-qaptworker.service
+        DESTINATION /lib/systemd/system)
 
 if(KF5Auth_FOUND)
     kauth_install_actions(${QAPT_WORKER_RDN_VERSIONED} ${CMAKE_CURRENT_BINARY_DIR}/${QAPT_WORKER_RDN_VERSIONED}.actions)

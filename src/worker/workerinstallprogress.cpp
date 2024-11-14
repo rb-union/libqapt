@@ -133,6 +133,13 @@ pkgPackageManager::OrderResult WorkerInstallProgress::start(pkgPackageManager *p
     }
 
     res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+    
+    // PATCH: uniontech0004_add_feature_get_dpkg_errordetails.patch
+    // If dpkg failed in hook actions, apt-pkg may not output useful error details, 
+    // set Transaction errorDetails when not capture apt-pkg error info.
+    if (pkgPackageManager::Completed != res && m_trans->errorDetails().isEmpty()) {
+        m_trans->setErrorDetails(QString::fromUtf8(masterbuf));
+    }
 
     close(readFromChildFD[0]);
     close(readFromChildFD[1]);
