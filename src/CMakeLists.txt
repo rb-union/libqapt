@@ -25,7 +25,7 @@ set_property(SOURCE ${CMAKE_CURRENT_BINARY_DIR}/worker/${QAPT_WORKER_RDN_VERSION
 )
 
 message(WARNING "terrible use of transaction xml file")
-qt5_add_dbus_interface(qapt_SRCS
+qt6_add_dbus_interface(qapt_SRCS
                        ${CMAKE_CURRENT_BINARY_DIR}/worker/${QAPT_WORKER_RDN_VERSIONED}.transaction.xml
                        transactioninterface_p)
 
@@ -35,7 +35,7 @@ set_property(SOURCE ${CMAKE_CURRENT_BINARY_DIR}/worker/${QAPT_WORKER_RDN_VERSION
 )
 
 message(WARNING "terrible use of  worker xml file")
-qt5_add_dbus_interface(qapt_SRCS
+qt6_add_dbus_interface(qapt_SRCS
                        ${CMAKE_CURRENT_BINARY_DIR}/worker/${QAPT_WORKER_RDN_VERSIONED}.xml
                        workerinterface_p)
 
@@ -48,6 +48,8 @@ add_library(QApt::Main ALIAS QApt)
 target_include_directories(QApt PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..;${CMAKE_CURRENT_BINARY_DIR}/..>")
 target_include_directories(QApt INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/QApt>" )
 
+message("---------------" ${QAPT_VERSION_STRING}   " ---- " ${QAPT_SOVERSION}, "--------" ${INCLUDE_INSTALL_DIR})
+
 set_target_properties(QApt
     PROPERTIES
     VERSION ${QAPT_VERSION_STRING}
@@ -56,13 +58,13 @@ set_target_properties(QApt
 
 target_link_libraries(QApt
     PUBLIC
-        Qt5::Widgets
+        Qt6::Widgets
         ${APTPKG_LIBRARIES}
     PRIVATE
-        Qt5::DBus
+        Qt6::DBus
         ${XAPIAN_LIBRARIES})
 
-install(TARGETS QApt EXPORT QAptTargets LIBRARY DESTINATION ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS QApt EXPORT QAptTargets LIBRARY DESTINATION ${KF6_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ecm_generate_headers(QAPT_CAMEL_CASE_HEADERS
     HEADER_NAMES
