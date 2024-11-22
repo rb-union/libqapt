@@ -41,19 +41,11 @@ class WorkerDaemon : public QCoreApplication, protected QDBusContext
 public:
     WorkerDaemon(int &argc, char **argv);
 
-    void setTransTimer(quint64 timer);
-    bool judgeAuthen();
-    //get idle timeout from config file
-    int getIdleTimeout();
-
 private:
     TransactionQueue *m_queue;
     AptWorker *m_worker;
     QThread *m_workerThread;
     QTimer *m_idleTimer;
-    quint64 m_TransTimer;
-    quint64 m_Deepin_deb_installer_PID;
-    quint64 m_IDLE_TIMEOUT;
 
     int dbusSenderUid() const;
     Transaction *createTransaction(QApt::TransactionRole role,

@@ -33,7 +33,6 @@
 
 class QTimer;
 class TransactionQueue;
-class WorkerDaemon;
 
 class Transaction : public QObject, protected QDBusContext
 {
@@ -62,14 +61,10 @@ class Transaction : public QObject, protected QDBusContext
     Q_PROPERTY(QString filePath READ filePath)
     Q_PROPERTY(QString errorDetails READ errorDetails)
     Q_PROPERTY(int frontendCaps READ frontendCaps)
-
-    Q_PROPERTY(QVariantMap envVariable READ envVariable)
 public:
     Transaction(TransactionQueue *queue, int userId);
     Transaction(TransactionQueue *queue, int userId,
                 QApt::TransactionRole role, QVariantMap packagesList);
-    Transaction(TransactionQueue *queue, int userId,
-                QApt::TransactionRole role, QVariantMap packagesList, WorkerDaemon *workerDaemon);
     ~Transaction();
 
     QString transactionId() const;
@@ -100,8 +95,6 @@ public:
     bool replaceConfFile() const;
     int frontendCaps() const;
 
-    QVariantMap envVariable();
-
     void setStatus(QApt::TransactionStatus status);
     void setError(QApt::ErrorCode code);
     void setCancellable(bool isCancellable);
@@ -121,7 +114,6 @@ public:
     void setConfFileConflict(const QString &currentPath, const QString &newPath);
     void setFrontendCaps(int frontendCaps);
 
-    void setEnvVariable(const QString &envVariableName, const QString &envVariableValue);
 private:
     // Pointers to external containers
     TransactionQueue *m_queue;
@@ -154,9 +146,6 @@ private:
     QString m_currentConfPath;
     bool m_replaceConfFile;
     QApt::FrontendCaps m_frontendCaps;
-    WorkerDaemon *m_workerDaemon;
-
-    QVariantMap m_envVariable;
 
     // Other data
     QMap<int, QString> m_roleActionMap;

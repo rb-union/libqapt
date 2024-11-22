@@ -1,0 +1,88 @@
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ libqapt (3.0.4-1deepin) unstable; urgency=medium
+ .
+   * add patch
+Author: Pino Toscano <zs@deepin.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: 2018-07-02
+
+--- libqapt-3.0.4.orig/src/debfile.cpp
++++ libqapt-3.0.4/src/debfile.cpp
+@@ -24,6 +24,7 @@
+ #include <QtCore/QProcess>
+ #include <QtCore/QStringBuilder>
+ #include <QtCore/QTemporaryFile>
++#include <QtCore/QRegularExpression>
+ 
+ #include <apt-pkg/debfile.h>
+ #include <apt-pkg/fileutl.h>
+@@ -151,39 +151,26 @@ QString DebFile::homepage() const
+ 
+ QString DebFile::longDescription() const
+ {
+-    QString rawDescription = QLatin1String(d->controlData->FindS("Description").c_str());
+-    // Remove short description
+-    rawDescription.remove(shortDescription() + '\n');
+-
++    QString rawDescription = QString(d->controlData->FindS("Description").c_str());
+     QString parsedDescription;
+     // Split at double newline, by "section"
+-    QStringList sections = rawDescription.split(QLatin1String("\n ."));
++    const QStringList sections = rawDescription.split("\n ");
++
++    // starts from 1, pass short description.
++    for (int i = 1; i < sections.count(); ++i)
++        parsedDescription.append(sections[i]);
++    parsedDescription.replace(QRegularExpression("[\r\n]+", QRegularExpression::MultilineOption), "\n");
++
++    if (!parsedDescription.isEmpty())
++        return parsedDescription;
++    else
++        return shortDescription();
+ 
+-    for (int i = 0; i < sections.count(); ++i) {
+-        sections[i].replace(QRegExp(QLatin1String("\n( |\t)+(-|\\*)")),
+-                                QLatin1Literal("\n\r ") % QString::fromUtf8("\xE2\x80\xA2"));
+-        // There should be no new lines within a section.
+-        sections[i].remove(QLatin1Char('\n'));
+-        // Hack to get the lists working again.
+-        sections[i].replace(QLatin1Char('\r'), QLatin1Char('\n'));
+-        // Merge multiple whitespace chars into one
+-        sections[i].replace(QRegExp(QLatin1String("\\ \\ +")), QChar::fromLatin1(' '));
+-        // Remove the initial whitespace
+-        sections[i].remove(0, 1);
+-        // Append to parsedDescription
+-        if (sections[i].startsWith(QLatin1String("\n ") % QString::fromUtf8("\xE2\x80\xA2 ")) || !i) {
+-            parsedDescription += sections[i];
+-        }  else {
+-            parsedDescription += QLatin1Literal("\n\n") % sections[i];
+-        }
+-    }
+-    return parsedDescription;
+ }
+ 
+ QString DebFile::shortDescription() const
+ {
+-    QString longDesc = QLatin1String(d->controlData->FindS("Description").c_str());
+-
++    QString longDesc(d->controlData->FindS("Description").c_str());
+     return longDesc.left(longDesc.indexOf(QLatin1Char('\n')));
+ }
+ 

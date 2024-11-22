@@ -24,13 +24,11 @@
 #include <QtCore/QProcess>
 #include <QtCore/QStringBuilder>
 #include <QtCore/QTemporaryFile>
-#include <QtCore/QRegularExpression>
 
 #include <apt-pkg/debfile.h>
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/md5.h>
 #include <apt-pkg/tagfile.h>
-#include <apt-pkg/error.h>
 
 #include <QDebug>
 
@@ -69,9 +67,6 @@ void DebFilePrivate::init()
     try {
         extractor = new debDebFile::MemControlExtract("control");
         if(!extractor->Read(deb)) {
-            // clear pending errors.
-            _error->Discard();
-
             return; // not valid.
         } else {
             isValid = true;
@@ -80,10 +75,6 @@ void DebFilePrivate::init()
         // MemControlExtract likes to throw out of range exceptions when it
         // encounters an invalid file. Catch those to prevent the application
         // from exploding.
-
-        // clear pending errors.
-        _error->Discard();
-
         return;
     }
 
@@ -152,26 +143,39 @@ QString DebFile::homepage() const
 
 QString DebFile::longDescription() const
 {
-    QString rawDescription = QString(d->controlData->FindS("Description").c_str());
+    QString rawDescription = QLatin1String(d->controlData->FindS("Description").c_str());
+    // Remove short description
+    rawDescription.remove(shortDescription() + '\n');
+
     QString parsedDescription;
     // Split at double newline, by "section"
-    const QStringList sections = rawDescription.split("\n ");
+    QStringList sections = rawDescription.split(QLatin1String("\n ."));
 
-    // starts from 1, pass short description.
-    for (int i = 1; i < sections.count(); ++i)
-        parsedDescription.append(sections[i]);
-    parsedDescription.replace(QRegularExpression("[\r\n]+", QRegularExpression::MultilineOption), "\n");
-
-    if (!parsedDescription.isEmpty())
-        return parsedDescription;
-    else
-        return shortDescription();
-
+    for (int i = 0; i < sections.count(); ++i) {
+        sections[i].replace(QRegExp(QLatin1String("\n( |\t)+(-|\\*)")),
+                                QLatin1Literal("\n\r ") % QString::fromUtf8("\xE2\x80\xA2"));
+        // There should be no new lines within a section.
+        sections[i].remove(QLatin1Char('\n'));
+        // Hack to get the lists working again.
+        sections[i].replace(QLatin1Char('\r'), QLatin1Char('\n'));
+        // Merge multiple whitespace chars into one
+        sections[i].replace(QRegExp(QLatin1String("\\ \\ +")), QChar::fromLatin1(' '));
+        // Remove the initial whitespace
+        sections[i].remove(0, 1);
+        // Append to parsedDescription
+        if (sections[i].startsWith(QLatin1String("\n ") % QString::fromUtf8("\xE2\x80\xA2 ")) || !i) {
+            parsedDescription += sections[i];
+        }  else {
+            parsedDescription += QLatin1Literal("\n\n") % sections[i];
+        }
+    }
+    return parsedDescription;
 }
 
 QString DebFile::shortDescription() const
 {
-    QString longDesc(d->controlData->FindS("Description").c_str());
+    QString longDesc = QLatin1String(d->controlData->FindS("Description").c_str());
+
     return longDesc.left(longDesc.indexOf(QLatin1Char('\n')));
 }
 

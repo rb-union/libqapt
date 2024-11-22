@@ -1,0 +1,21 @@
+Index: libqapt-3.0.4.2/src/worker/workerdaemon.cpp
+===================================================================
+--- libqapt-3.0.4.2.orig/src/worker/workerdaemon.cpp
++++ libqapt-3.0.4.2/src/worker/workerdaemon.cpp
+@@ -159,11 +159,15 @@ bool WorkerDaemon::writeFileToDisk(const
+         return false;
+     }
+ 
++	QString file_path;
++	QFileInfo f;
++	f = QFileInfo(path);
++	file_path = f.absolutePath();
+     QList<QString> whitelist;
+     quint8 allow_write_flag = 0;
+     whitelist<<"/etc/apt/";
+     for( int i=0; i< whitelist.size(); ++i){
+-        if(path.contains (whitelist[i], Qt::CaseSensitive)){
++        if(file_path.startsWith (whitelist[i], Qt::CaseSensitive)){
+             allow_write_flag = 1;
+         } 
+     }

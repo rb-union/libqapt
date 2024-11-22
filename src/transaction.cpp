@@ -49,8 +49,6 @@ class TransactionPrivate
             dbus = new TransactionInterface(QLatin1String(s_workerReverseDomainName),
                                             tid, QDBusConnection::systemBus(),
                                             0);
-            // dbus timeout, set no timeout.
-            dbus->setTimeout(INT_MAX);
         }
 
         ~TransactionPrivate()
@@ -85,7 +83,6 @@ class TransactionPrivate
         QString filePath;
         QString errorDetails;
         QApt::FrontendCaps frontendCaps;
-    	QVariantMap envVariable;            //保存环境变量的变量
 };
 
 Transaction::Transaction(const QString &tid)
@@ -444,16 +441,6 @@ void Transaction::updateErrorDetails(const QString &errorDetails)
     d->errorDetails = errorDetails;
 }
 
-QVariantMap Transaction::envVariable() const
-{
-    return d->envVariable;
-}
-
-void Transaction::updateEnvVariable(const QVariantMap &EnvVariable)
-{
-    d->envVariable = EnvVariable;
-}
-
 void Transaction::setLocale(const QString &locale)
 {
     QDBusPendingCall call = d->dbus->setProperty(QApt::LocaleProperty,
@@ -497,16 +484,6 @@ void Transaction::setDebconfPipe(const QString &pipe)
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
             this, SLOT(onCallFinished(QDBusPendingCallWatcher*)));
-}
-
-void Transaction::setEnvVariable(const QVariantMap &envVariable)
-{
-    for (auto key : envVariable.keys()) {
-        QDBusPendingCall call = d->dbus->setEnvVariable(key, envVariable.value(key).toString());
-        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-        connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)),
-                this, SLOT(onCallFinished(QDBusPendingCallWatcher *)));
-    }
 }
 
 void Transaction::run()
@@ -634,8 +611,6 @@ void Transaction::sync()
                 updateDownloadProgress(iter.value().value<QApt::DownloadProgress>());
             else if (iter.key() == QLatin1String("frontendCaps"))
                 updateFrontendCaps((FrontendCaps)iter.value().toInt());
-            else if (iter.key() == QLatin1String("envVariable"))
-                setProperty(iter.key().toLatin1(), d->dbus->property(iter.key().toLatin1()));
             else
                 qDebug() << "failed to set:" << iter.key();
         }
@@ -726,9 +701,6 @@ void Transaction::updateProperty(int type, const QDBusVariant &variant)
         break;
     case FrontendCapsProperty:
         updateFrontendCaps((FrontendCaps)variant.variant().toInt());
-        break;
-    case EnvVariableProperty:
-        updateEnvVariable(variant.variant().toMap());
         break;
     default:
         break;

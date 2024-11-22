@@ -1,0 +1,246 @@
+Description: <Add an interface for setting environment variables>
+ Add an interface for setting environment variables and parameters in src/transaction,
+ allowing users to set environment variables according to their needs.
+ Add an interface to get user-set environment variables in worker/transaction.
+ Set the obtained environment variable in worker/aptworker, if not, don't set it.
+ .
+ libqapt (3.0.4.5-1+deepin2) unstable; urgency=medium
+ .
+   * Add an interface for setting environment variables
+Author: cuizhen <cuizhen@uniontech.com>
+
+--- libqapt-3.0.4.5.orig/src/globals.h
++++ libqapt-3.0.4.5/src/globals.h
+@@ -248,7 +248,9 @@ namespace QApt
+         /// QString, the string describing the current error in detail
+         ErrorDetailsProperty,
+         /// int, the frontend capabilities for the transaction
+-        FrontendCapsProperty
++        FrontendCapsProperty,
++	///QString, the Enviroment Variable (e.g. $HOME) for transaction
++    	EnvVariableProperty
+     };
+ 
+     /**
+--- libqapt-3.0.4.5.orig/src/transaction.cpp
++++ libqapt-3.0.4.5/src/transaction.cpp
+@@ -83,6 +83,7 @@ class TransactionPrivate
+         QString filePath;
+         QString errorDetails;
+         QApt::FrontendCaps frontendCaps;
++    	QVariantMap envVariable;            //保存环境变量的变量
+ };
+ 
+ Transaction::Transaction(const QString &tid)
+@@ -441,6 +442,16 @@ void Transaction::updateErrorDetails(con
+     d->errorDetails = errorDetails;
+ }
+ 
++QVariantMap Transaction::envVariable() const
++{
++    return d->envVariable;
++}
++
++void Transaction::updateEnvVariable(const QVariantMap &EnvVariable)
++{
++    d->envVariable = EnvVariable;
++}
++
+ void Transaction::setLocale(const QString &locale)
+ {
+     QDBusPendingCall call = d->dbus->setProperty(QApt::LocaleProperty,
+@@ -486,6 +497,16 @@ void Transaction::setDebconfPipe(const Q
+             this, SLOT(onCallFinished(QDBusPendingCallWatcher*)));
+ }
+ 
++void Transaction::setEnvVariable(const QVariantMap &envVariable)
++{
++    for (auto key : envVariable.keys()) {
++        QDBusPendingCall call = d->dbus->setEnvVariable(key, envVariable.value(key).toString());
++        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
++        connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)),
++                this, SLOT(onCallFinished(QDBusPendingCallWatcher *)));
++    }
++}
++
+ void Transaction::run()
+ {
+     QDBusPendingCall call = d->dbus->run();
+@@ -611,6 +632,8 @@ void Transaction::sync()
+                 updateDownloadProgress(iter.value().value<QApt::DownloadProgress>());
+             else if (iter.key() == QLatin1String("frontendCaps"))
+                 updateFrontendCaps((FrontendCaps)iter.value().toInt());
++            else if (iter.key() == QLatin1String("envVariable"))
++                setProperty(iter.key().toLatin1(), d->dbus->property(iter.key().toLatin1()));
+             else
+                 qDebug() << "failed to set:" << iter.key();
+         }
+@@ -702,6 +725,9 @@ void Transaction::updateProperty(int typ
+     case FrontendCapsProperty:
+         updateFrontendCaps((FrontendCaps)variant.variant().toInt());
+         break;
++    case EnvVariableProperty:
++        updateEnvVariable(variant.variant().toMap());
++        break;
+     default:
+         break;
+     }
+--- libqapt-3.0.4.5.orig/src/transaction.h
++++ libqapt-3.0.4.5/src/transaction.h
+@@ -86,6 +86,7 @@ class Q_DECL_EXPORT Transaction : public
+     Q_PROPERTY(QString filePath READ filePath WRITE updateFilePath)
+     Q_PROPERTY(QString errorDetails READ errorDetails WRITE updateErrorDetails)
+     Q_PROPERTY(FrontendCaps frontendCaps READ frontendCaps WRITE updateFrontendCaps)
++    Q_PROPERTY(QVariantMap envVariable READ envVariable WRITE updateEnvVariable)
+ 
+ public:
+     /**
+@@ -268,6 +269,13 @@ public:
+      */
+     QApt::FrontendCaps frontendCaps() const;
+ 
++    /**
++     * Returns the HOME System environment variables worker now used.
++     *
++     * @see setEnvVariable
++     */
++    QVariantMap envVariable() const;
++
+ private:
+     TransactionPrivate *const d;
+ 
+@@ -292,6 +300,7 @@ private:
+     void updateDownloadETA(quint64 ETA);
+     void updateFilePath(const QString &filePath);
+     void updateErrorDetails(const QString &errorDetails);
++    void updateEnvVariable(const QVariantMap &EnvVariable);
+     void updateFrontendCaps(QApt::FrontendCaps frontendCaps);
+ 
+ Q_SIGNALS:
+@@ -476,6 +485,16 @@ public Q_SLOTS:
+     void setDebconfPipe(const QString &pipe);
+ 
+     /**
++     * Set the system environment variable HOME that will be used by the worker.
++     *
++     * @param envVariable the HOME system environment variable
++     *
++     * @see envVariable
++     */
++    void setEnvVariable(const QVariantMap &envVariable);
++
++
++    /**
+      * Sets the frontend capabilities for the frontend handling this
+      * transaction. E.g. advertise support for debconf, etc.
+      */
+--- libqapt-3.0.4.5.orig/src/worker/aptworker.cpp
++++ libqapt-3.0.4.5/src/worker/aptworker.cpp
+@@ -443,6 +443,13 @@ void AptWorker::commitChanges()
+     WorkerAcquire *acquire = new WorkerAcquire(this, 15, 50);
+     acquire->setTransaction(m_trans);
+ 
++    if (!m_trans->envVariable().isEmpty()) {
++        QMap<QString, QVariant> env = m_trans->envVariable();
++        foreach (auto str, env.keys()) {
++            setenv(str.toLocal8Bit(), env[str].toString().toLocal8Bit(), 1);
++        }
++    }
++
+     pkgAcquire fetcher;
+     fetcher.Setup(acquire);
+ 
+--- libqapt-3.0.4.5.orig/src/worker/org.kubuntu.qaptworker.transaction.xml.cmake
++++ libqapt-3.0.4.5/src/worker/org.kubuntu.qaptworker.transaction.xml.cmake
+@@ -27,6 +27,9 @@
+     <property name="filePath" type="s" access="read"/>
+     <property name="errorDetails" type="s" access="read"/>
+     <property name="frontendCaps" type="i" access="read"/>
++    <property name="envVariable" type="a{sv}" access="read">
++	<annotation name="org.qtproject.QtDBus.QtTypeName" value="QVariantMap"/>
++    </property>
+     <signal name="propertyChanged">
+       <arg name="role" type="i" direction="out"/>
+       <arg name="newValue" type="v" direction="out"/>
+@@ -49,6 +52,10 @@
+       <arg name="property" type="i" direction="in"/>
+       <arg name="value" type="v" direction="in"/>
+     </method>
++    <method name="setEnvVariable">
++      <arg name="name" type="s" direction="in"/>
++      <arg name="value" type="s" direction="in"/>
++    </method>
+     <method name="run">
+     </method>
+     <method name="cancel">
+--- libqapt-3.0.4.5.orig/src/worker/transaction.cpp
++++ libqapt-3.0.4.5/src/worker/transaction.cpp
+@@ -464,6 +464,18 @@ void Transaction::setErrorDetails(const
+     emit propertyChanged(QApt::ErrorDetailsProperty, QDBusVariant(errorDetails));
+ }
+ 
++QVariantMap Transaction::envVariable()
++{
++    return m_envVariable;
++}
++
++void Transaction::setEnvVariable(const QString &envVariableName, const QString &envVariableValue)
++{
++    m_envVariable.insert(envVariableName, envVariableValue);
++    setenv(envVariableName.toLocal8Bit(), envVariableValue.toLocal8Bit(), 1);
++    emit propertyChanged(QApt::EnvVariableProperty, QDBusVariant(m_envVariable));
++}
++
+ bool Transaction::safeUpgrade() const
+ {
+     return m_safeUpgrade;
+@@ -557,6 +569,12 @@ void Transaction::setProperty(int proper
+     case QApt::FrontendCapsProperty:
+         setFrontendCaps(value.variant().toInt());
+         break;
++    case QApt::EnvVariableProperty: {
++        for (auto key : value.variant().toMap().keys()) {
++            setEnvVariable(key, value.variant().toMap().value(key).toString());
++        }
++    }
++    break;
+     default:
+         sendErrorReply(QDBusError::InvalidArgs);
+         break;
+--- libqapt-3.0.4.5.orig/src/worker/transaction.h
++++ libqapt-3.0.4.5/src/worker/transaction.h
+@@ -61,6 +61,8 @@ class Transaction : public QObject, prot
+     Q_PROPERTY(QString filePath READ filePath)
+     Q_PROPERTY(QString errorDetails READ errorDetails)
+     Q_PROPERTY(int frontendCaps READ frontendCaps)
++
++    Q_PROPERTY(QVariantMap envVariable READ envVariable)
+ public:
+     Transaction(TransactionQueue *queue, int userId);
+     Transaction(TransactionQueue *queue, int userId,
+@@ -95,6 +97,8 @@ public:
+     bool replaceConfFile() const;
+     int frontendCaps() const;
+ 
++    QVariantMap envVariable();
++
+     void setStatus(QApt::TransactionStatus status);
+     void setError(QApt::ErrorCode code);
+     void setCancellable(bool isCancellable);
+@@ -114,6 +118,7 @@ public:
+     void setConfFileConflict(const QString &currentPath, const QString &newPath);
+     void setFrontendCaps(int frontendCaps);
+ 
++    void setEnvVariable(const QString &envVariableName, const QString &envVariableValue);
+ private:
+     // Pointers to external containers
+     TransactionQueue *m_queue;
+@@ -147,6 +152,8 @@ private:
+     bool m_replaceConfFile;
+     QApt::FrontendCaps m_frontendCaps;
+ 
++    QVariantMap m_envVariable;
++
+     // Other data
+     QMap<int, QString> m_roleActionMap;
+     QTimer *m_idleTimer;

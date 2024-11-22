@@ -1,15 +1,10 @@
 add_library(debthumbnailer MODULE DebThumbnailer.cpp)
 
 target_link_libraries(debthumbnailer
-    KF6::KIOWidgets
+    KF5::KIOWidgets
     QApt::Main)
 
 message(WARNING "make sure thumbnailer actually works")
 
-install(TARGETS debthumbnailer DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES debthumbnailer.desktop DESTINATION /share/kservices5/)
-
-
-message("------------------" ${KDE_INSTALL_PLUGINDIR})
-message("------------------" ${KDE_INSTALL_KSERVICESDIR})
-message("-----------------" ${KDE_INSTALL_LIBDIR})
+install(TARGETS debthumbnailer DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES debthumbnailer.desktop DESTINATION ${SERVICES_INSTALL_DIR})

@@ -10,18 +10,14 @@
     <description>Update software sources</description>
     <message>Update software sources</message>
     <defaults>
-      <allow_any>no</allow_any>
       <allow_inactive>no</allow_inactive>
-      <allow_active>auth_admin_keep</allow_active>
+      <allow_active>yes</allow_active>
     </defaults>
   </action>
   <action id="@QAPT_WORKER_RDN_VERSIONED@.commitchanges">
     <description>Install or remove packages</description>
-    <description xml:lang="zh_CN">安装或移除软件包需要授权</description>
     <message>Install or remove packages</message>
-    <message xml:lang="zh_CN">安装或移除软件包需要授权</message>
     <defaults>
-      <allow_any>no</allow_any>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin_keep</allow_active>
     </defaults>
@@ -30,7 +26,6 @@
     <description>Change system settings</description>
     <message>Change system settings</message>
     <defaults>
-      <allow_any>no</allow_any>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin_keep</allow_active>
     </defaults>
@@ -39,8 +34,8 @@
     <description>Cancel the task of another user</description>
     <message> To cancel someone else's software changes, you need to authenticate.</message>
     <defaults>
-      <allow_any>no</allow_any>
-      <allow_inactive>no</allow_inactive>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
       <allow_active>auth_admin</allow_active>
     </defaults>
   </action>

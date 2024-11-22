@@ -125,7 +125,7 @@ Description[x-test]=xxTo update the software catalog you need to authenticate.xx
 Description[zh_CN]=更新软件分类需要您进行认证。
 Description[zh_TW]=要更新軟體類別，您必須通過認證。
 Description[zh_HK]=更新軟件分類需要您進行認證。
-Policy=auth_admin
+Policy=yes
 Persistence=session
 
 [@QAPT_WORKER_RDN_VERSIONED@.commitchanges]

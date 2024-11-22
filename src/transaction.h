@@ -86,7 +86,6 @@ class Q_DECL_EXPORT Transaction : public QObject
     Q_PROPERTY(QString filePath READ filePath WRITE updateFilePath)
     Q_PROPERTY(QString errorDetails READ errorDetails WRITE updateErrorDetails)
     Q_PROPERTY(FrontendCaps frontendCaps READ frontendCaps WRITE updateFrontendCaps)
-    Q_PROPERTY(QVariantMap envVariable READ envVariable WRITE updateEnvVariable)
 
 public:
     /**
@@ -269,13 +268,6 @@ public:
      */
     QApt::FrontendCaps frontendCaps() const;
 
-    /**
-     * Returns the HOME System environment variables worker now used.
-     *
-     * @see setEnvVariable
-     */
-    QVariantMap envVariable() const;
-
 private:
     TransactionPrivate *const d;
 
@@ -300,7 +292,6 @@ private:
     void updateDownloadETA(quint64 ETA);
     void updateFilePath(const QString &filePath);
     void updateErrorDetails(const QString &errorDetails);
-    void updateEnvVariable(const QVariantMap &EnvVariable);
     void updateFrontendCaps(QApt::FrontendCaps frontendCaps);
 
 Q_SIGNALS:
@@ -483,16 +474,6 @@ public Q_SLOTS:
      * @see debconfPipe
      */
     void setDebconfPipe(const QString &pipe);
-
-    /**
-     * Set the system environment variable HOME that will be used by the worker.
-     *
-     * @param envVariable the HOME system environment variable
-     *
-     * @see envVariable
-     */
-    void setEnvVariable(const QVariantMap &envVariable);
-
 
     /**
      * Sets the frontend capabilities for the frontend handling this
